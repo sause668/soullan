@@ -30,7 +30,6 @@
 #profilePicDB {
     font-size: 10rem;
     background-color: white;
-    border: 1px solid #007bff4b;
     border-radius: 100px;
 }
 
@@ -65,12 +64,10 @@
     grid-template-columns: 50% 50%;
     grid-template-rows: auto;
     gap: .3rem; */
-    border: 1px solid black;
 }
 
 .classGridConDB {
     padding: 0rem;
-    border: 1px solid black;
 
 }
 
@@ -79,7 +76,7 @@
     justify-content: space-between;
     gap: .5rem;
     /* width: 80%; */
-    padding: 1rem;
+    padding: 2.5rem;
 
 }
 

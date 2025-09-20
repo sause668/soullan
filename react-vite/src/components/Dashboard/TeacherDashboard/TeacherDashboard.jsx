@@ -51,14 +51,6 @@ function TeacherDashboard() {
                     modalComponent={<CreateClassModal />}
                     cssClasses={'newClassButtonDB'}
                   />
-                  <button 
-                    onClick={() => navigate('/gemini-test')}
-                    className="newClassButtonDB"
-                    style={{marginTop: '10px', backgroundColor: '#667eea'}}
-                  >
-                    🤖 Test Gemini AI
-                  </button>
-                  
                 </div>
               </div>
             </div>
