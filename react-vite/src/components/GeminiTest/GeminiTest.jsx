@@ -28,9 +28,9 @@ const GeminiTest = () => {
       const response = await fetch(`/api/gemini/${endpoint}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json', 
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(data), 
       });
 
       const result = await response.json();
