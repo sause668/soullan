@@ -31,7 +31,14 @@ class StudentBehavior(db.Model):
             'notes': self.notes
         }
     
-    def info(self):
+    def info(self, student_id=None):
+        """
+        Return behavior info, optionally filtered by student_id
+        If student_id is provided, only return if it matches the behavior's student_id
+        """
+        if student_id and self.student_id != student_id:
+            return None
+        
         return {
             'id': self.id,
             'student_id': self.student_id,
