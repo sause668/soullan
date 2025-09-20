@@ -39,26 +39,26 @@ def seed_student_behaviors():
     
     for student_id, class_id in student_class_combinations:
         # Generate realistic behavior scores (mostly 6-9 range with some variation)
-        attention = random.randint(6, 9)
-        if random.random() < 0.1:  # 10% chance of lower scores
-            attention = random.randint(4, 6)
-        elif random.random() < 0.05:  # 5% chance of higher scores
-            attention = 10
+        attention = 3
+        if random.random() < 0.5:  # 10% chance of lower scores
+            attention = random.randint(1, 2)
+        elif random.random() < 0.5:  # 5% chance of higher scores
+            attention = random.randint(4, 5)
         
-        learnability = random.randint(6, 9)
-        if random.random() < 0.1:  # 10% chance of lower scores
-            learnability = random.randint(4, 6)
-        elif random.random() < 0.05:  # 5% chance of higher scores
-            learnability = 10
+        learnability = 3    
+        if random.random() < 0.5:  # 10% chance of lower scores
+            learnability = random.randint(1, 2)
+        elif random.random() < 0.5:  # 5% chance of higher scores
+            learnability = random.randint(4, 5)
             
-        cooperation = random.randint(6, 9)
-        if random.random() < 0.1:  # 10% chance of lower scores
-            cooperation = random.randint(4, 6)
-        elif random.random() < 0.05:  # 5% chance of higher scores
-            cooperation = 10
+        cooperation = 3
+        if random.random() < 0.5:  # 10% chance of lower scores
+            cooperation = random.randint(1, 2)
+        elif random.random() < 0.5:  # 5% chance of higher scores
+            cooperation = random.randint(4, 5)
         
         # 70% chance of having notes
-        notes = random.choice(behavior_notes) if random.random() < 0.7 else None
+        notes = random.choice(behavior_notes) if random.random() < 0.3 else None
         
         db.session.add(StudentBehavior(
             student_id=student_id,

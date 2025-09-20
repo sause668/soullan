@@ -58,3 +58,13 @@ class StudentBehavior(db.Model):
             'learnability': self.learnability,
             'cooperation': self.cooperation,
         }
+
+    def grade(self, student_id):
+        return {
+            'id': self.id,
+            'student_id': self.student_id,
+            'class_id': self.class_id,
+            'attention': self.attention,
+            'learnability': self.learnability,
+            'cooperation': self.cooperation,
+        }

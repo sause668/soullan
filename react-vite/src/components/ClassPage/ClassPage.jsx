@@ -4,7 +4,7 @@ import "./ClassPage.css";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { fetchGradebookClass } from "../../redux/class";
 import { fetchClassBehaviorGrades } from "../../redux/behaviorGrades";
-import { calcFinalGradeTeacher, calcLetterGrade, sortStudents, sortAssignments } from "../../utils/Grading";
+import { calcFinalGradeTeacher, calcLetterGrade, sortStudents, sortAssignments, calcBehaviorGrade, convertBehaviorPriorityGrade } from "../../utils/Grading";
 import { typeToString } from "../../utils/TypeConvertion";
 
 function ClassPage() {
@@ -13,25 +13,24 @@ function ClassPage() {
   const { classId } = useParams();
   const user = useSelector((state) => state.session.user);
   const class_ = useSelector((state) => state.class.class);
-  const behaviorGrades = useSelector((state) => state.behaviorGrades.behaviorGrades);
   const [quarter, setQuarter] = useState(1)
   const [isLoaded, setIsLoaded] = useState(false);
   const [errors, setErrors] = useState({});
 
   // Calculate final behavior score for a student
-  const calcFinalBehaviorScore = (studentId) => {
-    if (!behaviorGrades || behaviorGrades.length === 0) return 'N/A';
+  // const calcFinalBehaviorScore = (studentId) => {
+  //   if (!behaviorGrades || behaviorGrades.length === 0) return 'N/A';
     
-    const studentBehavior = behaviorGrades.find(bg => bg.student_id === studentId);
-    if (!studentBehavior) return 'N/A';
+  //   const studentBehavior = behaviorGrades.find(bg => bg.student_id === studentId);
+  //   if (!studentBehavior) return 'N/A';
     
-    const attention = studentBehavior.attention || 0;
-    const learningSpeed = studentBehavior.learnability || 0; // Note: using 'learnability' from model
-    const cooperation = studentBehavior.cooperation || 0;
+  //   const attention = studentBehavior.attention || 0;
+  //   const learningSpeed = studentBehavior.learnability || 0; // Note: using 'learnability' from model
+  //   const cooperation = studentBehavior.cooperation || 0;
     
-    const average = (attention + learningSpeed + cooperation) / 3;
-    return Math.round(average * 10) / 10; // Round to 1 decimal place
-  };
+  //   const average = (attention + learningSpeed + cooperation) / 3;
+  //   return Math.round(average * 10) / 10; // Round to 1 decimal place
+  // };
 
   useEffect(() => {
     dispatch(fetchGradebookClass({teacherId: user.teacher.id, classId}))
@@ -117,8 +116,10 @@ function ClassPage() {
                     .map((student, index) => {
                         let finalGrade = calcFinalGradeTeacher(class_.assignments.filter(a => a.quarter == quarter), student.id);
                         let finalLetterGrade = calcLetterGrade(finalGrade);
+                        const studentBehavior = class_.behaviors.find((behavior) => behavior.student_id === student.id);
+                        let finalBehaviorGrade = calcBehaviorGrade(studentBehavior.attention, studentBehavior.learnability, studentBehavior.cooperation);
                         return (
-                          <div>
+                          <div key={`studentClass${index}`}>
                             <div 
                                 className={`studentConC lightBlueBox ${finalGrade != 'N/A' ? finalLetterGrade:'noGrade'}`} 
                                 key={`studentClass${index}`}
@@ -129,7 +130,7 @@ function ClassPage() {
                                     <h4 className="studentGradeC">{finalGrade != 'N/A' ? `${finalGrade} (${finalLetterGrade})`:'N/A'}</h4>
                                 </div>
                                 <div className="behaviorSection">
-                                    <h3 className="OverallBehaviorC">Overall Behavior: {calcFinalBehaviorScore(student.id)}/5</h3>
+                                    <h3 className="OverallBehaviorC">Priority Level: {convertBehaviorPriorityGrade(finalBehaviorGrade)}</h3>
                                 </div>
                             </div>
                           </div>

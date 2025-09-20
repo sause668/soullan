@@ -59,17 +59,13 @@
 
 /* Table */
 #tableConBB {
-    max-width: 50%;
+    max-width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 30%;
-    margin: 0 auto;
 }
 
 th,td {
     height: 2.5rem;
-    min-width: 4rem;
+    min-width: 7rem;
     max-width: 7rem;
 }
 
@@ -78,9 +74,8 @@ th,td {
     grid-template-columns: auto auto;
     grid-row: auto;
     background-color: white;
-    margin: 1rem auto;
-    max-width: fit-content;
-    justify-self: center;
+    margin: 1rem;
+    max-width: 100%;
 }
 
 #tableStudentsConBB {
