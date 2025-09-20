@@ -220,6 +220,8 @@ th,td {
     gap: .5rem;
 }
 
+
+
 @media (max-width:920px) {
     #headerConGB {
         flex-direction: column;

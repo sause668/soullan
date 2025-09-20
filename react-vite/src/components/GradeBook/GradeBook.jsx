@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./GradeBook.css";
 import { Navigate, useParams } from "react-router-dom";
 import { fetchGradebookClass } from "../../redux/class";
+import { calcBehaviorGrade, convertBehaviorGrade, convertBehaviorPriorityGrade } from "../../utils/Grading";
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
 import AddStudentModal from "./AddStudentModal";
 import NewAssignmentModal from "./NewAssignmentModal";
@@ -30,8 +31,21 @@ function GradeBook() {
   ];
 
   // Get behavior grade for a student
-  const getStudentBehaviorGrade = (studentId) => {
-    return behaviors.find(bg => bg.student_id === studentId) || null;
+  // const getStudentBehaviorGrade = (studentId) => {
+  //   return behaviorGrades.find(bg => bg.student.id === studentId) || null;
+  // };
+
+  // Get behavior grade for a student and assignment
+  // const getBehaviorGrade = (studentId, assignmentId) => {
+  //   const studentGrade = getStudentBehaviorGrade(studentId);
+  //   return studentGrade ? studentGrade[assignmentId] : '';
+  // };
+
+   // Calculate behavior final grade (average of the three behavior scores)
+   const calcBehaviorFinalGrade = (studentId) => {
+    /*const studentGrade = getStudentBehaviorGrade(studentId);
+    return studentGrade ? studentGrade.final_grade : 'N/A';*/
+    return 'N/A';
   };
 
   useEffect(() => {
@@ -94,11 +108,11 @@ function GradeBook() {
               </div>
             </div>
           </div>
+          {/* Grade Book */}
           <div id="tableConGB" className="lightBlueBox">
-          
             <div id="tableFormatConGB">
               <div id="tableStudentsConGB">
-              <table id="tableGBS">
+                <table id="tableGBS">
                   <tbody id="tableBodyGB">
                     {class_.students.sort((s1, s2) => sortStudents(s1, s2)).map((student, iStudent) => (
                       <tr className="tableBodyRowBG" key={`studentName${iStudent}`}>
@@ -175,8 +189,10 @@ function GradeBook() {
                   </tbody>
                 </table>
               </div>
-              <div id="tableConBB" className="lightBlueBox">
-          
+            </div>
+          </div>
+          {/* Behavior Book */}
+          <div id="tableConBB" className="lightBlueBox">
             <div id="tableFormatConBB">
               <div id="tableStudentsConBB">
                 <table id="tableBBS">
@@ -194,53 +210,75 @@ function GradeBook() {
                         </tr>
                       ))}
                     </tbody>
-                  </table>
-                </div>
-                <div id="tableGradesConBB">
-                  <table id="tableBB">
-                    <thead id="tableHeadBB">
-                      <tr id="tableHeadRowBB">
-                        {behaviorAssignments.map((assignment, index) => (
-                          <OpenModalCell
-                            cellText={assignment.name}
-                            modalComponent={<AssignmentInfo assignment={assignment}/>}
-                            cssClasses={`tableCellBB tableHeadCellBB assignHeadCellBB ${assignment.type}`}
-                            key={`assignHead${index}`}
-                          />
-                        ))}
-                        <td className="tableCellBB tableHeadCellBB finalHeadCellBB">Final</td>
-                      </tr>
-                    </thead>
-                    <tbody id="tableBodyBB">
-                      {class_.students.map((student, iStudent) => {
-                        // Calculate final grade using behavior assignments
-                        let finalGrade = calcBehaviorFinalGrade(student.id);
-                        let finalLetterGrade = finalGrade !== 'N/A' ? calcLetterGrade(finalGrade) : 'N/A';
-                        return (
-                        <tr className="tableBodyRowBB" key={`studentName${iStudent}`}>
-                          {behaviorAssignments.map((assignment, iAssignment) => {
-                            const currentGrade = getBehaviorGrade(student.id, assignment.id);
-                            
-                            return (
-                              <td key={`grade${iStudent}${iAssignment}`} className="tableCellBB tableBodyCellBB gradeBodyCellBB">
-                                <div className="behaviorGradeStatic">
-                                  {currentGrade || '-'}
-                                </div>
-                              </td>
-                            );
-                          })}
-                          {finalGrade != 'N/A' ? 
-                            <td className={`tableCellBB tableBodyCellBB finalBodyCellBB ${finalLetterGrade}`}>{finalGrade} ({finalLetterGrade})</td>
-                          :
-                            <td className={`tableCellBB tableBodyCellBB finalBodyCellBB noGrade`}>N/A</td>
-                          }
-                        </tr>
-                      )})}
-                    </tbody>
-                  </table>
-                </div>
+                </table>
               </div>
-            </div>
+              <div id="tableGradesConBB">
+                <table id="tableBB">
+                  <thead id="tableHeadBB">
+                    <tr id="tableHeadRowBB">
+                      {behaviorAssignments.map((assignment, index) => (
+                        <OpenModalCell
+                          cellText={assignment.name}
+                          modalComponent={<AssignmentInfo assignment={assignment}/>}
+                          cssClasses={`tableCellBB tableHeadCellBB assignHeadCellBB ${assignment.type}`}
+                          key={`assignHead${index}`}
+                        />
+                      ))}
+                      <td className="tableCellBB tableHeadCellBB finalHeadCellBB">Priority Level</td>
+                    </tr>
+                  </thead>
+                  <tbody id="tableBodyBB">
+                    {class_.students.map((student, iStudent) => {
+                      // Calculate final grade using behavior assignments
+                      const studentBehavior = class_.behaviors.find((behavior) => behavior.student_id === student.id);
+                      let behaviorGrade = calcBehaviorGrade(studentBehavior.attention, studentBehavior.learnability, studentBehavior.cooperation);
+                      
+                      return (
+                      <tr className="tableBodyRowBB" key={`studentName${iStudent}`}>
+                        <td className="tableCellBB tableBodyCellBB gradeBodyCellBB">
+                          {convertBehaviorGrade(studentBehavior.attention)}
+                        </td>
+                        <td className="tableCellBB tableBodyCellBB gradeBodyCellBB">
+                          {convertBehaviorGrade(studentBehavior.learnability)}
+                        </td>
+                        <td className="tableCellBB tableBodyCellBB gradeBodyCellBB">
+                          {convertBehaviorGrade(studentBehavior.cooperation)}
+                        </td>
+                        {behaviorGrade != 'N/A' ? 
+                          <td className={`tableCellBB tableBodyCellBB finalBodyCellBB ${'finalLetterGrade'}`}>{convertBehaviorPriorityGrade(behaviorGrade)}</td>
+                        :
+                          <td className={`tableCellBB tableBodyCellBB finalBodyCellBB noGrade`}>N/A</td>
+                        }
+                        {/* {class_.behaviors.map((behavior, iBehavior) => {
+                          return (
+                            <td key={`behavior${iStudent}${iBehavior}`} className="tableCellBB tableBodyCellBB gradeBodyCellBB">
+                              {behavior.grade}
+                            </td>
+                          );
+                        })} */}
+                        {/* {behaviorAssignments.map((assignment, iAssignment) => {
+                          // const currentGrade = getBehaviorGrade(student.id, assignment.id);
+                          const currentGrade = 4;
+
+                          
+                          return (
+                            <td key={`grade${iStudent}${iAssignment}`} className="tableCellBB tableBodyCellBB gradeBodyCellBB">
+                              <div className="behaviorGradeStatic">
+                                {currentGrade || '-'}
+                              </div>
+                            </td>
+                          );
+                        })}
+                        {finalGrade != 'N/A' ? 
+                          <td className={`tableCellBB tableBodyCellBB finalBodyCellBB ${finalLetterGrade}`}>{finalGrade} ({finalLetterGrade})</td>
+                        :
+                          <td className={`tableCellBB tableBodyCellBB finalBodyCellBB noGrade`}>N/A</td>
+                        } */}
+                      </tr>
+                    )})}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>

@@ -75,6 +75,19 @@ class Class(db.Model):
         }
     
     def grades(self, student_id):
+
+        current_behavior = None
+
+        for behavior in self.behaviors:
+            behaviorInfo = behavior.to_dict()
+            if behaviorInfo['student_id'] == student_id:
+                current_behavior = {
+                    'attention': behaviorInfo['attention'],
+                    'learnability': behaviorInfo['learnability'],
+                    'cooperation': behaviorInfo['cooperation']
+                }
+
+
         return {
             "id": self.id,
             "teacher_id": self.teacher_id,
@@ -85,7 +98,7 @@ class Class(db.Model):
             "room": self.room,
             "current_grade": "To be worked on",
             "assignments": [assignment.grade(student_id) for assignment in self.assignments],
-            "behaviors": [behavior.info(student_id) for behavior in self.behaviors],
+            "behaviors": current_behavior,
             "teacher": self.teacher.info()
         }
     
