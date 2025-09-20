@@ -31,7 +31,7 @@ class StudentBehavior(db.Model):
             'notes': self.notes
         }
     
-    def info(self):
+    def behavior_book(self):
         return {
             'id': self.id,
             'student_id': self.student_id,
@@ -39,7 +39,5 @@ class StudentBehavior(db.Model):
             'attention': self.attention,
             'learnability': self.learnability,
             'cooperation': self.cooperation,
-            'notes': self.notes,
-            'student': self.student.info() if self.student else None,
-            'class': self.class_.class_info() if self.class_ else None
+            'notes': self.notes
         }
