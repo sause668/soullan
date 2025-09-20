@@ -1,0 +1,342 @@
+#behaviorBookCon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+/* Header */
+#headerConBB {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%
+}
+
+#titleConBB {
+    text-align: center;
+    padding: 1rem;
+}
+
+#titleBB {
+
+}
+
+#optionsConBB {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: .5rem;
+    padding: 1rem;
+}
+
+
+.behaviorBookButtonBB {
+
+}
+
+.addStudentBB {
+
+}
+
+.quarterSelectConBB {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: .2rem;
+}
+
+.quarterSelectBB {
+    border: 1px solid #007AFF;
+    border-radius: 5px;
+    padding: .5rem;
+    width: 3rem;
+    margin: 0rem;
+}
+
+
+/* Table */
+#tableConBB {
+    max-width: 100%;
+    display: flex;
+}
+
+th,td {
+    height: 2.5rem;
+    min-width: 7rem;
+    max-width: 7rem;
+}
+
+#tableFormatConBB {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-row: auto;
+    background-color: white;
+    margin: 1rem;
+    max-width: 100%;
+}
+
+#tableStudentsConBB {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+#tableGradesConBB {
+    overflow-y: scroll;
+
+}
+
+
+#tableBB {
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+#tableBBS {
+    table-layout: fixed;
+    border-collapse: collapse;
+    height: max-content;
+}
+
+.tableCellBB {
+    text-align: center;
+    border: 1px solid #0000003b;
+    
+}
+
+#tableHeadBB {
+
+}
+
+#tableHeadRowBB {
+
+}
+
+.tableHeadCellBB {
+
+}
+
+.studentsHeadCellBB {
+    background-color: #78909c72;
+}
+
+.studentsHeadCellBBS {
+    background-color: #78909c72;
+    text-align: center;
+    border: 1px solid #0000003b;
+    height: max-content;
+}
+
+.assignHeadCellBB {
+    cursor: pointer;
+}
+
+.finalHeadCellBB {
+    background-color: #2978ff46;
+}
+
+
+
+.tableBodyBB {
+
+}
+
+.tableBodyRowBB {
+
+}
+
+.tableBodyCellBB {
+
+}
+
+.studentBodyCellBB {
+    background-color: #78909c10;
+    cursor: pointer;
+}
+
+.gradeBodyCellBB {
+    cursor: pointer;
+
+}
+
+.emptyCell {
+    background-color: #0000003b;
+    min-width: 0px;
+    min-height: 0px;
+}
+
+.emptyCellTop {
+    border-top: 1px solid #0000003b;
+}
+
+.emptyCellBottom {
+    border-bottom: 1px solid #0000003b;
+}
+
+.finalBodyCellBB {
+    font-weight: bold;
+    z-index: 9999;
+}
+
+.behaviorGradeNumbers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.2rem;
+    flex-wrap: wrap;
+}
+
+.behaviorGradeNumber {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid #007AFF;
+    border-radius: 50%;
+    background-color: transparent;
+    color: #007AFF;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.behaviorGradeNumber:hover {
+    background-color: #007AFF;
+    color: white;
+    transform: scale(1.1);
+}
+
+.behaviorGradeNumber.selected {
+    background-color: #007AFF;
+    color: white;
+    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.3);
+}
+
+.behaviorGradeNumber:active {
+    transform: scale(0.95);
+}
+
+/* Forms */
+#studentInfoCon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.typeSelectBB {
+    border: 1px solid #007AFF;
+    border-radius: 5px;
+    padding: .5rem;
+    padding-right: 0rem;
+    
+}
+
+#assignInfoCon {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: .5rem;
+    padding: 1rem;
+}
+
+#assignButtonsCon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+}
+
+@media (max-width:920px) {
+    #headerConBB {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+    }
+}
+
+@media (max-width:500px) {
+    #titleBB {
+        font-size: 1.75rem;
+    }
+}
+
+.behaviorGradeStatic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #007AFF;
+    padding: 0.5rem;
+}
+
+.behaviorGradeSelect {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 1rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+.behaviorGradeSelect:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.behaviorGradeSelect:hover {
+    border-color: #007bff;
+}
+
+.addBehaviorCellBB {
+  background-color: #f0f8ff;
+  cursor: pointer;
+  text-align: center;
+  vertical-align: middle;
+  min-width: 2rem;
+  max-width: 2rem;
+}
+
+/* .addBehaviorButton {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid #f0f8ff;
+  border-radius: 50%;
+  background-color: #f0f8ff;
+  color: black;
+  justify-self: center;
+  align-self: center;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.addBehaviorButton:hover {
+  background-color: #f0f8ff;
+  border-color: #f0f8ff;
+  transform: scale(1.1);
+}
+
+.addBehaviorButton:active {
+  transform: scale(0.95);
+} -->

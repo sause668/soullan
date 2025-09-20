@@ -7,6 +7,8 @@ import StudentsPage from '../components/StudentsPage/StudentsPage';
 import StudentPage from '../components/StudentPage/StudentPage';
 import StudentGrades from '../components/StudentGrades/StudentGrades';
 import ClassPage from '../components/ClassPage/ClassPage';
+import BehaviorBook from '../components/BehaviorBook/BehaviorBook';
+import GeminiTest from '../components/GeminiTest/GeminiTest';
 
 export const router = createBrowserRouter([
   {
@@ -77,6 +79,23 @@ export const router = createBrowserRouter([
             element: <ClassPage/>
           }
         ]
+      },
+      {
+        path: 'behaviorbook/',
+        children: [
+          {
+            path: "",
+            element: <Navigate to="/" replace={true} />,
+          },
+          {
+            path: ":classId",
+            element: <BehaviorBook/>,
+          },
+        ]
+      },
+      {
+        path: 'gemini-test',
+        element: <GeminiTest/>,
       }
     ],
   },

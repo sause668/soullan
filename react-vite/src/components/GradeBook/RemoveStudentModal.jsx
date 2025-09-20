@@ -1,6 +1,6 @@
 import { useDispatch, } from "react-redux"
 import { useModal } from "../../context/Modal";
-import "./GradeBook.css";
+  import "./GradeBook.css";
 import { removeStudent } from "../../redux/class";
 import { useState } from "react";
 

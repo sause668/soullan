@@ -3,16 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import "./StudentGrades.css";
 import { useParams } from "react-router-dom";
 import { fetchGradesClass } from "../../redux/class";
-import { calcFinalGradeStudent, calcLetterGrade, sortAssignments } from "../../utils/Grading";
+import { calcFinalGradeStudent, calcLetterGrade, sortAssignments, calcBehaviorGrade, convertBehaviorGrade, convertBehaviorPriorityGrade } from "../../utils/Grading";
 
 function StudentGrades() {
   const dispatch = useDispatch();
   const { studentId, classId } = useParams();
   const class_ = useSelector((state) => state.class.class);
+  // const behaviorGrade = useSelector((state) => state.behaviorGrades.currentBehaviorGrade);
   const [quarter, setQuarter] = useState(1)
   const [isLoaded, setIsLoaded] = useState(false);
   const [errors, setErrors] = useState({});
-
 
 
   useEffect(() => {
@@ -25,6 +25,26 @@ function StudentGrades() {
         }
       })
   }, [dispatch, studentId, classId]);
+
+  // useEffect(() => {
+  //   if (studentId && classId) {
+  //     dispatch(fetchStudentBehaviorGrades({ studentId, classId, quarter }));
+  //   }
+  // }, [dispatch, studentId, classId, quarter]);
+
+  // // Calculate final behavior score
+  // const calcFinalBehaviorScore = () => {
+  //   if (!behaviorGrade) return 'N/A';
+    
+  //   const attention = behaviorGrade.attention || 0;
+  //   const learningSpeed = behaviorGrade.learning_speed || 0;
+  //   const cooperation = behaviorGrade.cooperation || 0;
+
+    
+    
+  //   const average = (attention + learningSpeed + cooperation) / 3;
+  //   return Math.round(average * 10) / 10; // Round to 1 decimal place
+  // };
 
   return (
     <div className="">
@@ -72,6 +92,56 @@ function StudentGrades() {
               </div>
             </div>
           ))}
+          </div>
+          {/* <div id="headerConG">
+            <div id="classInfoConG" className="lightBlueBox">
+              <h2 id="classNameG">{class_.grade}th Grade {class_.name} - Period {class_.period}</h2>
+              <h3 id="classTeacherG">{class_.teacher.last_name}, {class_.teacher.first_name}</h3>
+              <h3 id="classRoomG">Room - {class_.room}</h3>
+            </div>
+            <div id="classGradeConG" className="lightBlueBox">
+              <h2 id="currentGradeG">Current Grade: {calcFinalGradeStudent(class_.assignments.filter(a => a.quarter == quarter))}</h2>
+            </div>
+          </div> */}
+          <div id="behaviorScoresConG">
+            <div id="behaviorScoresHeaderG" className="lightBlueBox">
+              <h2 id="behaviorFinalScoreG">
+                Priority Level: {convertBehaviorPriorityGrade(calcBehaviorGrade(class_.behaviors.attention, class_.behaviors.learnability, class_.behaviors.cooperation))}
+              </h2>
+            </div>
+            <div id="behaviorScoresGridG">
+              <div className="behaviorScoreConG"
+              style={{
+                backgroundColor: '#d400f954'
+              }}>
+                <h3 className="behaviorScoreLabelG">Attention</h3>
+                <div className="behaviorScoreValueG">
+                  {convertBehaviorGrade(class_.behaviors.attention)}
+                </div>
+              </div>
+              <div className="behaviorScoreConG"
+              style={{
+                backgroundColor: '#00aeff4a'
+              }}>
+                <h3 className="behaviorScoreLabelG">Learning Speed</h3>
+                <div className="behaviorScoreValueG">
+                  {convertBehaviorGrade(class_.behaviors.learnability)}
+                </div>
+              </div>
+              <div className="behaviorScoreConG"
+              style={{
+                backgroundColor:'#f500564e'
+              }}>
+                <h3 className="behaviorScoreLabelG">Cooperation</h3>
+                <div className="behaviorScoreValueG">
+                  {convertBehaviorGrade(class_.behaviors.cooperation)}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="aiResponseConG">
+            <h2 id="aiResponseTitleG">AI Response</h2>
+            <p id="aiResponseTextG">{class_.ai_response.replace(/\*\*/g, '\n')}</p>
           </div>
         </div>
       )}

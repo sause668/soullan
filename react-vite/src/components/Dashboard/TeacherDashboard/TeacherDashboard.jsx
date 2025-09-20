@@ -51,7 +51,6 @@ function TeacherDashboard() {
                     modalComponent={<CreateClassModal />}
                     cssClasses={'newClassButtonDB'}
                   />
-                  
                 </div>
               </div>
             </div>

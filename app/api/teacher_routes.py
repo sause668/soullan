@@ -54,3 +54,16 @@ def get_class_gradebook(teacher_id, class_id):
         return jsonify({"message": "Class not found"}), 404
 
     return jsonify(class_.grade_book())
+
+# @teacher_routes.route('/<int:teacher_id>/behaviorbook/<int:class_id>', methods=['GET'])
+# @login_required
+# def get_class_behaviorbook(teacher_id, class_id):
+#     """
+#     Get class by ID (for behaviorbook page)
+#     """
+#     class_ = Class.query.filter_by(id=class_id, teacher_id=teacher_id).first()
+
+#     if not class_:
+#         return jsonify({"message": "Class not found"}), 404
+
+#     return jsonify(class_.behavior_book())

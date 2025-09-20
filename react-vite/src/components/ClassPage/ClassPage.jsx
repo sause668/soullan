@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import "./ClassPage.css";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { fetchGradebookClass } from "../../redux/class";
-import { calcFinalGradeTeacher, calcLetterGrade, sortStudents, sortAssignments } from "../../utils/Grading";
+import { fetchClassBehaviorGrades } from "../../redux/behaviorGrades";
+import { calcFinalGradeTeacher, calcLetterGrade, sortStudents, sortAssignments, calcBehaviorGrade, convertBehaviorPriorityGrade } from "../../utils/Grading";
 import { typeToString } from "../../utils/TypeConvertion";
 
 function ClassPage() {
@@ -16,7 +17,20 @@ function ClassPage() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [errors, setErrors] = useState({});
 
-  
+  // Calculate final behavior score for a student
+  // const calcFinalBehaviorScore = (studentId) => {
+  //   if (!behaviorGrades || behaviorGrades.length === 0) return 'N/A';
+    
+  //   const studentBehavior = behaviorGrades.find(bg => bg.student_id === studentId);
+  //   if (!studentBehavior) return 'N/A';
+    
+  //   const attention = studentBehavior.attention || 0;
+  //   const learningSpeed = studentBehavior.learnability || 0; // Note: using 'learnability' from model
+  //   const cooperation = studentBehavior.cooperation || 0;
+    
+  //   const average = (attention + learningSpeed + cooperation) / 3;
+  //   return Math.round(average * 10) / 10; // Round to 1 decimal place
+  // };
 
   useEffect(() => {
     dispatch(fetchGradebookClass({teacherId: user.teacher.id, classId}))
@@ -29,8 +43,14 @@ function ClassPage() {
       })
   }, [dispatch, classId, user]);
 
-  if (!user || user.type != 'teacher') return <Navigate to="/" replace={true} />;
+  // Fetch behavior grades when quarter changes
+  useEffect(() => {
+    if (classId && quarter) {
+      dispatch(fetchClassBehaviorGrades({ classId, quarter }));
+    }
+  }, [dispatch, classId, quarter]);
 
+  if (!user || user.type != 'teacher') return <Navigate to="/" replace={true} />;
 
   return (
     <>
@@ -96,15 +116,24 @@ function ClassPage() {
                     .map((student, index) => {
                         let finalGrade = calcFinalGradeTeacher(class_.assignments.filter(a => a.quarter == quarter), student.id);
                         let finalLetterGrade = calcLetterGrade(finalGrade);
+                        const studentBehavior = class_.behaviors.find((behavior) => behavior.student_id === student.id);
+                        let finalBehaviorGrade = calcBehaviorGrade(studentBehavior.attention, studentBehavior.learnability, studentBehavior.cooperation);
                         return (
+                          <div key={`studentClass${index}`}>
                             <div 
                                 className={`studentConC lightBlueBox ${finalGrade != 'N/A' ? finalLetterGrade:'noGrade'}`} 
                                 key={`studentClass${index}`}
                                 onClick={()=>nav(`/students/${student.id}`)}
                             >
-                                <h3 className="studentNameC">{student.last_name}, {student.first_name}</h3>
-                                <h4 className="studentGradeC">{finalGrade != 'N/A' ? `${finalGrade} (${finalLetterGrade})`:'N/A'}</h4>
+                                <div className="studentInfoSection">
+                                    <h3 className="studentNameC">{student.last_name}, {student.first_name}</h3>
+                                    <h4 className="studentGradeC">{finalGrade != 'N/A' ? `${finalGrade} (${finalLetterGrade})`:'N/A'}</h4>
+                                </div>
+                                <div className="behaviorSection">
+                                    <h3 className="OverallBehaviorC">Priority Level: {convertBehaviorPriorityGrade(finalBehaviorGrade)}</h3>
+                                </div>
                             </div>
+                          </div>
                         );
                     })
                 }

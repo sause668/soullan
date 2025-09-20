@@ -88,3 +88,42 @@ export const sortAssignments = (assign1, assign2) => {
     const date2 = new Date(assign2.due_date).toISOString().slice(0, 10);
     return date1 > date2 ? 1:-1;
 }
+
+export const calcBehaviorGrade = (att, learn, coop) => {
+  const total = att + learn * 1.5 + coop / 2
+  return Math.round(total / 3)
+}
+
+export const convertBehaviorGrade = (grade) => {
+  switch (grade) {
+    case 1:
+      return 'Poor';
+    case 2:
+      return 'Lacking';
+    case 3:
+      return 'Average';
+    case 4:
+      return 'Good';
+    case 5:
+      return 'Excellent';
+    default:
+      return 'N/A';
+  }
+}
+
+export const convertBehaviorPriorityGrade = (grade) => {
+  switch (grade) {
+    case 1:
+      return 'Highest';
+    case 2:
+      return 'High';
+    case 3:
+      return 'Medium';
+    case 4:
+      return 'Low';
+    case 5:
+      return 'Lowest';
+    default:
+      return 'N/A';
+  }
+}

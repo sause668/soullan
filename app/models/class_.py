@@ -20,6 +20,7 @@ class Class(db.Model):
     teacher = db.relationship("Teacher", uselist=False, back_populates="classes")
     students = db.relationship("Student", uselist=True, secondary=students_classes, back_populates="classes")
     assignments = db.relationship("Assignment", uselist=True, back_populates="class_", cascade="all, delete-orphan")
+    behaviors = db.relationship("StudentBehavior", uselist=True, back_populates="class_", cascade="all, delete-orphan")
 
     def teacher_dash(self):
         return {
@@ -56,10 +57,37 @@ class Class(db.Model):
             "period": self.period,
             "room": self.room,
             "students": [student.info() for student in self.students],
-            "assignments": [assignment.grade_book() for assignment in self.assignments]
+            "assignments": [assignment.grade_book() for assignment in self.assignments],
+            "behaviors": [behavior.info() for behavior in self.behaviors]
+        }
+
+    def behavior_book(self):
+        return {
+            "id": self.id,
+            "teacher_id": self.teacher_id,
+            "name": self.name,
+            "subject": self.subject,
+            "grade": self.grade,
+            "period": self.period,
+            "room": self.room,
+            "students": [student.info() for student in self.students],
+            "behaviors": [behavior.info() for behavior in self.behaviors]
         }
     
     def grades(self, student_id):
+
+        current_behavior = None
+
+        for behavior in self.behaviors:
+            behaviorInfo = behavior.to_dict()
+            if behaviorInfo['student_id'] == student_id:
+                current_behavior = {
+                    'attention': behaviorInfo['attention'],
+                    'learnability': behaviorInfo['learnability'],
+                    'cooperation': behaviorInfo['cooperation']
+                }
+
+
         return {
             "id": self.id,
             "teacher_id": self.teacher_id,
@@ -70,6 +98,7 @@ class Class(db.Model):
             "room": self.room,
             "current_grade": "To be worked on",
             "assignments": [assignment.grade(student_id) for assignment in self.assignments],
+            "behaviors": current_behavior,
             "teacher": self.teacher.info()
         }
     
@@ -97,7 +126,8 @@ class Class(db.Model):
             "room": self.room,
             "teacher": self.teacher.info(),
             "students": [student.info() for student in self.students],
-            "assignments": [assignment.grade_book() for assignment in self.assignments]
+            "assignments": [assignment.grade_book() for assignment in self.assignments],
+            "behaviors": [behavior.info_limited() for behavior in self.behaviors]
         }
     
     
