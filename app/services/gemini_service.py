@@ -163,7 +163,14 @@ class PromptTemplates:
         """Template for analyzing student behavior patterns with grades"""
         system_prompt = """You are an AI assistant that analyzes student behavior patterns and academic performance to help educators understand and support their students better. You consider both behavioral observations and academic performance (grades) to provide comprehensive insights."""
         
-        human_prompt = """Behavior data: {behavior_data}
+        human_prompt = """
+        Access the student's behavior data and academic performance (grades) to provide a comprehensive analysis.
+        The highest behavioral score is 5 and the lowest is 1.
+        The student is accessed in Learning speed, Cooperation, and Attention.
+
+        
+
+        Behavior data: {behavior_data}
         Time period: {time_period}
         Academic performance (grades): {grades_data}
         
@@ -187,6 +194,51 @@ class PromptTemplates:
             SystemMessagePromptTemplate.from_template(system_prompt),
             HumanMessagePromptTemplate.from_template(human_prompt)
         ])
+
+
+def parse_behavior_data(behavior_json: Dict[str, Any]) -> str:
+    """
+    Parse behavior data JSON into a formatted string
+    
+    Args:
+        behavior_json: Dictionary containing behavior data like {"Att": 3, "Learn": 2, "Coop": 1}
+        
+    Returns:
+        Formatted string like "Attention: 3, Learning Speed: 2, Cooperation: 1"
+    """
+    # Mapping of abbreviated keys to full names
+    key_mapping = {
+        'Att': 'Attention',
+        'Learn': 'Learning Speed', 
+        'Coop': 'Cooperation'
+    }
+    
+    formatted_parts = []
+    
+    for key, value in behavior_json.items():
+        # Use the mapping if available, otherwise use the key as-is
+        display_name = key_mapping.get(key, key)
+        formatted_parts.append(f"{display_name}: {value}")
+    
+    return ", ".join(formatted_parts)
+
+
+def parse_grades_data(grades_json: Dict[str, Any]) -> str:
+    """
+    Parse grades data JSON into a formatted string
+    
+    Args:
+        grades_json: Dictionary containing grades data like {"assignment-name": "score", "assignment-name-2": "score"}
+        
+    Returns:
+        Formatted string like "assignment-name: score, assignment-name-2: score"
+    """
+    formatted_parts = []
+    
+    for assignment, score in grades_json.items():
+        formatted_parts.append(f"{assignment}: {score}")
+    
+    return ", ".join(formatted_parts)
 
 
 # Global instance for easy access

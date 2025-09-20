@@ -144,6 +144,16 @@ def behavior_analysis():
         time_period = data.get('time_period', 'Recent period')
         grades_data = data.get('grades_data', 'No grade data provided')
         
+        # Check if behavior_data is a JSON object and parse it
+        if isinstance(behavior_data, dict):
+            from ..services.gemini_service import parse_behavior_data
+            behavior_data = parse_behavior_data(behavior_data)
+        
+        # Check if grades_data is a JSON object and parse it
+        if isinstance(grades_data, dict):
+            from ..services.gemini_service import parse_grades_data
+            grades_data = parse_grades_data(grades_data)
+        
         gemini_service = get_gemini_service()
         template = PromptTemplates.get_behavior_analysis_template()
         
