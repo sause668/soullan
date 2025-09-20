@@ -8,6 +8,7 @@ from .classes import seed_classes, undo_classes
 from .students_classes import seed_students_classes, undo_students_classes
 from .assignments import seed_assignments, undo_assignments
 from . grades import seed_grades, undo_grades
+from .behavior_grades import seed_behavior_grades, undo_behavior_grades
 
 from app.models.db import db, environment, SCHEMA
 
@@ -19,6 +20,7 @@ seed_commands = AppGroup('seed')
 # Creates the `flask seed all` command
 @seed_commands.command('all')
 def seed():
+    undo_behavior_grades()
     undo_grades()
     undo_assignments()
     undo_students_classes()
@@ -38,11 +40,13 @@ def seed():
     seed_students_classes()
     seed_assignments()
     seed_grades()
+    seed_behavior_grades()
 
 
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')
 def undo():
+    undo_behavior_grades()
     undo_grades()
     undo_assignments()
     undo_students_classes()

@@ -186,18 +186,46 @@ th,td {
     z-index: 9999;
 }
 
-.behaviorGradeSelect {
-    width: 100%;
-    height: 100%;
-    border: none;
-    background: transparent;
-    text-align: center;
-    font-size: inherit;
+.behaviorGradeNumbers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.2rem;
+    flex-wrap: wrap;
 }
 
-.behaviorGradeSelect:focus {
-    outline: 2px solid #007AFF;
-    outline-offset: -2px;
+.behaviorGradeNumber {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid #007AFF;
+    border-radius: 50%;
+    background-color: transparent;
+    color: #007AFF;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.behaviorGradeNumber:hover {
+    background-color: #007AFF;
+    color: white;
+    transform: scale(1.1);
+}
+
+.behaviorGradeNumber.selected {
+    background-color: #007AFF;
+    color: white;
+    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.3);
+}
+
+.behaviorGradeNumber:active {
+    transform: scale(0.95);
 }
 
 /* Forms */
@@ -247,4 +275,35 @@ th,td {
     #titleBB {
         font-size: 1.75rem;
     }
+}
+
+.behaviorGradeStatic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #007AFF;
+    padding: 0.5rem;
+}
+
+.behaviorGradeSelect {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 1rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+.behaviorGradeSelect:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.behaviorGradeSelect:hover {
+    border-color: #007bff;
 }

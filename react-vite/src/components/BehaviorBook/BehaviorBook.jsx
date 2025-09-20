@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./BehaviorBook.css";
 import { Navigate, useParams } from "react-router-dom";
 import { fetchGradebookClass } from "../../redux/class";
+import { fetchClassBehaviorGrades, updateBehaviorGrades, createBehaviorGrades } from "../../redux/behaviorGrades";
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
 import AddStudentModal from "./AddStudentModal";
 import OpenModalCell from "../OpenModalTableCell/OpenModalTableCell";
@@ -15,12 +16,10 @@ function BehaviorBook() {
   const { classId } = useParams();
   const user = useSelector((state) => state.session.user);
   const class_ = useSelector((state) => state.class.class);
+  const behaviorGrades = useSelector((state) => state.behaviorGrades.behaviorGrades);
   const [quarter, setQuarter] = useState(1)
   const [isLoaded, setIsLoaded] = useState(false);
   const [errors, setErrors] = useState({});
-  
-  // State to track behavior grades for each student
-  const [behaviorGrades, setBehaviorGrades] = useState({});
 
   // Define the three behavior assignments
   const behaviorAssignments = [
@@ -29,31 +28,67 @@ function BehaviorBook() {
     { id: 'cooperation', name: 'Cooperation', type: 'behavior', quarter: 1 }
   ];
 
+  // Get behavior grade for a student
+  const getStudentBehaviorGrade = (studentId) => {
+    return behaviorGrades.find(bg => bg.student.id === studentId) || null;
+  };
+
   // Handle behavior grade change
-  const handleBehaviorGradeChange = (studentId, assignmentId, grade) => {
-    setBehaviorGrades(prev => ({
-      ...prev,
-      [`${studentId}_${assignmentId}`]: grade
-    }));
+  const handleBehaviorGradeChange = async (studentId, assignmentId, grade) => {
+    const studentGrade = getStudentBehaviorGrade(studentId);
+    
+    if (studentGrade) {
+      // Update existing behavior grades
+      const updatedGrades = {
+        ...studentGrade,
+        [assignmentId]: grade
+      };
+      
+      const result = await dispatch(updateBehaviorGrades({
+        studentId,
+        classId,
+        quarter,
+        attention: updatedGrades.attention,
+        learning_speed: updatedGrades.learning_speed,
+        cooperation: updatedGrades.cooperation
+      }));
+      
+      if (result.errors) {
+        setErrors(result.errors);
+      }
+    } else {
+      // Create new behavior grades
+      const newGrades = {
+        attention: assignmentId === 'attention' ? grade : null,
+        learning_speed: assignmentId === 'learning_speed' ? grade : null,
+        cooperation: assignmentId === 'cooperation' ? grade : null
+      };
+      
+      const result = await dispatch(createBehaviorGrades({
+        studentId,
+        classId,
+        quarter,
+        attention: newGrades.attention || 1,
+        learning_speed: newGrades.learning_speed || 1,
+        cooperation: newGrades.cooperation || 1
+      }));
+      
+      if (result.errors) {
+        setErrors(result.errors);
+      }
+    }
   };
 
   // Get behavior grade for a student and assignment
   const getBehaviorGrade = (studentId, assignmentId) => {
-    return behaviorGrades[`${studentId}_${assignmentId}`] || '';
+    const studentGrade = getStudentBehaviorGrade(studentId);
+    return studentGrade ? studentGrade[assignmentId] : '';
   };
 
   // Calculate behavior final grade (average of the three behavior scores)
   const calcBehaviorFinalGrade = (studentId) => {
-    // const grades = behaviorAssignments.map(assignment => {
-    //   const grade = getBehaviorGrade(studentId, assignment.id);
-    //   return grade ? parseInt(grade) : null;
-    // }).filter(grade => grade !== null);
-    // 
-    // if (grades.length === 0) return 'N/A';
-    // 
-    // const average = grades.reduce((sum, grade) => sum + grade, 0) / grades.length;
-    // return Math.round(average * 20); // Convert 1-5 scale to 0-100 scale
-    return 'N/A';
+    const studentGrade = getStudentBehaviorGrade(studentId);
+    return studentGrade ? studentGrade.final_grade : 'N/A';
   };
 
   useEffect(() => {
@@ -66,6 +101,13 @@ function BehaviorBook() {
         }
       })
   }, [dispatch, classId, user]);
+
+  // Fetch behavior grades when quarter changes
+  useEffect(() => {
+    if (isLoaded && classId && quarter) {
+      dispatch(fetchClassBehaviorGrades({ classId, quarter }));
+    }
+  }, [dispatch, classId, quarter, isLoaded]);
 
   if (!user || user.type != 'teacher') return <Navigate to="/" replace={true} />;
 
@@ -152,12 +194,13 @@ function BehaviorBook() {
                       <tr className="tableBodyRowBB" key={`studentName${iStudent}`}>
                         {behaviorAssignments.map((assignment, iAssignment) => {
                           const currentGrade = getBehaviorGrade(student.id, assignment.id);
+                          
                           return (
                             <td key={`grade${iStudent}${iAssignment}`} className="tableCellBB tableBodyCellBB gradeBodyCellBB">
-                              <select
-                                value={currentGrade}
-                                onChange={(e) => handleBehaviorGradeChange(student.id, assignment.id, e.target.value)}
+                              <select 
                                 className="behaviorGradeSelect"
+                                value={currentGrade || ''}
+                                onChange={(e) => handleBehaviorGradeChange(student.id, assignment.id, parseInt(e.target.value))}
                               >
                                 <option value="">-</option>
                                 <option value="1">1</option>
