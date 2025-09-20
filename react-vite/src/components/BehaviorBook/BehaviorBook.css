@@ -317,14 +317,16 @@ th,td {
   max-width: 2rem;
 }
 
-.addBehaviorButton {
+/* .addBehaviorButton {
   display: inline-block;
   width: 1.5rem;
   height: 1.5rem;
-  border: 2px solid #007AFF;
+  border: 2px solid #f0f8ff;
   border-radius: 50%;
-  background-color: #007AFF;
-  color: white;
+  background-color: #f0f8ff;
+  color: black;
+  justify-self: center;
+  align-self: center;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
@@ -335,11 +337,11 @@ th,td {
 }
 
 .addBehaviorButton:hover {
-  background-color: #0056b3;
-  border-color: #0056b3;
+  background-color: #f0f8ff;
+  border-color: #f0f8ff;
   transform: scale(1.1);
 }
 
 .addBehaviorButton:active {
   transform: scale(0.95);
-}
+} -->

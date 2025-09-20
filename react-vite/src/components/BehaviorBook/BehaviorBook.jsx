@@ -166,18 +166,18 @@ function BehaviorBook() {
                     {class_.students.sort((s1, s2) => sortStudents(s1, s2)).map((student, iStudent) => (
 
                       <tr className="tableBodyRowBB" key={`studentName${iStudent}`}>
-                        <td className="tableCellBB tableBodyCellBB addBehaviorCellBB">
-                          <OpenModalButton
+
+                          <OpenModalCell
+                            cellText={'+'}
                             modalComponent={<BehaviorScoreModal
                               student={student}
-                              classId={classId}
+                              classId={class_.id}
                             />}
-                            cssClasses={'addBehaviorButton'}
+                            cssClasses={"tableCellBB tableBodyCellBB addBehaviorCellBB"}
                             onModalClose={handleBehaviorScoreSuccess}
                           >
                             +
-                          </OpenModalButton>
-                        </td>
+                          </OpenModalCell>
                         <OpenModalCell
                           cellText={`${student.last_name}, ${student.first_name}`}
                           modalComponent={<StudentInfoModal
