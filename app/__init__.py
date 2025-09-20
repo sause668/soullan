@@ -38,7 +38,6 @@ app.register_blueprint(assignment_routes, url_prefix='/api/assignments')
 app.register_blueprint(student_routes, url_prefix='/api/students')
 app.register_blueprint(teacher_routes, url_prefix='/api/teachers')
 app.register_blueprint(admin_routes, url_prefix='/api/admins')
-# app.register_blueprint(behavior_grade_routes, url_prefix='/api/behavior-grades')
 
 db.init_app(app)
 Migrate(app, db)
