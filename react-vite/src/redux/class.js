@@ -122,6 +122,26 @@ export const fetchGradebookClass = (params) => async (dispatch) => {
     }
 };
 
+export const fetchBehaviorClass = (params) => async (dispatch) => {
+    const { teacherId, classId } = params
+	const response = await csrfFetch(`/api/teachers/${teacherId}/behaviorbook/${classId}`);
+    
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data));
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            console.log(errorMessages)
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
+};
+
 export const fetchGradesClass = (params) => async (dispatch) => {
     const { studentId, classId } = params
 	const response = await csrfFetch(`/api/students/${studentId}/grades/${classId}`);
@@ -415,6 +435,36 @@ export const deleteGrade = (params) => async (dispatch) => {
     }
 };
 
+
+// Behaviors
+export const createBehavior = (params) => async (dispatch) => {
+    const { classId, studentId, attention, learnability, cooperation, notes } = params;
+	const response = await csrfFetch(`/api/classes/${classId}/behaviors`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            student_id: studentId,
+            attention,
+            learnability,
+            cooperation,
+            notes
+        })
+      });
+
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setClass(data))
+    } else {
+        const errorObj = {}
+        if (response.status < 500) {
+            const errorMessages = await response.json();
+            errorObj.errors = errorMessages
+        } else {
+            errorObj.errors = { message: "Something went wrong. Please try again" }
+        }
+        return errorObj
+    }
+};
 
 const initialState = { 
     class: null,
