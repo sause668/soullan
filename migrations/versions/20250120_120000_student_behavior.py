@@ -37,7 +37,7 @@ def upgrade():
     )
 
     if environment == "production":
-        op.execute(f"ALTER TABLE student_behavior SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE student_behaviors SET SCHEMA {SCHEMA};")
 
 
 def downgrade():
