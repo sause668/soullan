@@ -8,6 +8,7 @@ import StudentPage from '../components/StudentPage/StudentPage';
 import StudentGrades from '../components/StudentGrades/StudentGrades';
 import ClassPage from '../components/ClassPage/ClassPage';
 import BehaviorBook from '../components/BehaviorBook/BehaviorBook';
+import GeminiTest from '../components/GeminiTest/GeminiTest';
 
 export const router = createBrowserRouter([
   {
@@ -91,6 +92,10 @@ export const router = createBrowserRouter([
             element: <BehaviorBook/>,
           },
         ]
+      },
+      {
+        path: 'gemini-test',
+        element: <GeminiTest/>,
       }
     ],
   },
