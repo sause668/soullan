@@ -1,103 +1,38 @@
-# Soul Academy
-This site is based on my previous career as a middle school teacher.  The online portal was helpful anf efficient for my while teaching so I wanted to make my own.  The site has two login, teacher and student, that go to different views of the site.  The students are able to view the class information and grade. The teachers able to view their class information with all their students.  The can create/edit classes and add/ remove students. They and also modify assignments add grades.  All changes for reflected on the students side then they log in.
+## USER AUTHENTICATION/AUTHORIZATION
 
-Contact: [LinkedIn](https://www.linkedin.com/in/kamara-reynolds-41248686/)
+### All endpoints that require authentication
 
-## Live Link
-https://soul-class.onrender.com/
+All endpoints that require a current user to be logged in.
 
-## Tech Stack
-### Frameworks and Libraries
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+* Request: endpoints that require authentication
+* Error Response: Require authentication
+  * Status Code: 401
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-### Database:
-![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
-
-### Hosting:
-![Render](https://img.shields.io/badge/Render-%46E3B7.svg?style=for-the-badge&logo=render&logoColor=white)
-
-# Page Overview
-## Landing Page
-![landing]
-
-## Dashboard (Teacher)
-![dash-teacher]
-
-## Dashboard (Student)
-![dash-student]
-
-## Grade Book Page (Teacher Only)
-![gradebook]
-
-## Grades Page (Student Only)
-![grades]
-
-[landing]: ./images/landing.png
-[dash-teacher]: ./images/dash-teacher.png
-[dash-student]: ./images/dash-student.png
-[gradebook]: ./images/gradebook.png
-[grades]: ./images/grades.png
-
-
-# Installation 
-1. Clone this repository (only this branch).
-
-2. Install dependencies.
-
-   ```bash
-   pipenv install -r requirements.txt
-   ```
-
-3. Create a __.env__ file based on the example with proper settings for your
-   development environment.
-
-4. Make sure the SQLite3 database connection URL is in the __.env__ file.
-
-5. This starter organizes all tables inside the `flask_schema` schema, defined
-   by the `SCHEMA` environment variable.  Replace the value for
-   `SCHEMA` with a unique name, **making sure you use the snake_case
-   convention.**
-
-6. Get into your pipenv, migrate your database, seed your database, and run your
-   Flask app:
-
-   ```bash
-   pipenv shell
-   ```
-
-   ```bash
-   flask db upgrade
-   ```
-
-   ```bash
-   flask seed all
-   ```
-
-   ```bash
-   flask run
-   ```
-
-7. The React frontend has no styling applied. Copy the __.css__ files from your
-   Authenticate Me project into the corresponding locations in the
-   __react-vite__ folder to give your project a unique look.
-
-8. To run the React frontend in development, `cd` into the __react-vite__
-   directory and run `npm i` to install dependencies. Next, run `npm run build`
-   to create the `dist` folder. The starter has modified the `npm run build`
-   command to include the `--watch` flag. This flag will rebuild the __dist__
-   folder whenever you change your code, keeping the production version up to
-   date.
-
-
-# Endpoints
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
 
 ### Get the Current User (Teacher)
 
 Returns the information about the current teacher user that is logged in.
 
-* Request: GET /api/auth
+* Require Authentication: false
+* Request
+  * Method: GET
+  * Route path: /api/auth
+  * Body: none
 
-* Response: 200
+* Successful Response when there is a logged in user
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "id": 1,
@@ -115,7 +50,12 @@ Returns the information about the current teacher user that is logged in.
     }
     ```
     
-* Error Response: 401
+* Error Response: Require authentication
+  * Status Code: 401
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "message": "Unauthorized"
@@ -126,9 +66,18 @@ Returns the information about the current teacher user that is logged in.
 
 Returns the information about the current student user that is logged in.
 
-* Request: GET /api/auth
+* Require Authentication: false
+* Request
+  * Method: GET
+  * Route path: /api/auth
+  * Body: none
 
-* Response: 200
+* Successful Response when there is a logged in user
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "id": 5,
@@ -144,7 +93,12 @@ Returns the information about the current student user that is logged in.
     }
     ```
 
-* Error Response: 401
+* Error Response: Require authentication
+  * Status Code: 401
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "message": "Unauthorized"
@@ -156,7 +110,14 @@ Returns the information about the current student user that is logged in.
 Logs in a current user with valid credentials and returns the current user's
 information.
 
-* Request: POST /api/auth/login
+* Require Authentication: false
+* Request
+  * Method: POST
+  * Route path: /api/auth/login
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "email": "ssnape@soulacademy.com",
@@ -165,7 +126,12 @@ information.
     }
     ```
 
-* Response: 200
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "id": 1,
@@ -183,7 +149,12 @@ information.
     }
     ```
 
-* Error Response: 401
+* Error Response: Invalid credentials
+  * Status Code: 401
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "email": "Email provided not found.",
@@ -196,7 +167,14 @@ information.
 Logs in a current user with valid credentials and returns the current user's
 information.
 
-* Request: POST /api/auth/login
+* Require Authentication: false
+* Request
+  * Method: POST
+  * Route path: /api/auth/login
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
         "email": "hpotter@soulacademy.com",
@@ -205,7 +183,12 @@ information.
     }
     ```
 
-* Response: 200
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "id": 5,
@@ -221,7 +204,12 @@ information.
     }
     ```
 
-* Error Response: 401
+* Error Response: Invalid credentials
+  * Status Code: 401
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "email": "Email provided not found.",
@@ -234,7 +222,14 @@ information.
 Creates a new user, logs them in as the current user, and returns the current
 user's information.
 
-* Request: POST /api/auth/signup
+* Require Authentication: false
+* Request
+  * Method: POST
+  * Route path: /api/auth/signup
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
         "firstName": "Severus",
@@ -248,7 +243,12 @@ user's information.
     }
     ```
 
-* Response: 201
+* Successful Response
+  * Status Code: 201
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "id": 1,
@@ -266,7 +266,12 @@ user's information.
     }
     ```
 
-* Error response: 401
+* Error response: Validation errors
+  * Status Code: 401
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "email": "Email address is already in use.",
@@ -285,7 +290,14 @@ user's information.
 Creates a new user, logs them in as the current user, and returns the current
 user's information.
 
-* Request: POST /api/auth/signup
+* Require Authentication: false
+* Request
+  * Method: POST
+  * Route path: /api/auth/signup
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
         "firstName": "Harry",
@@ -298,7 +310,12 @@ user's information.
     }
     ```
 
-* Response: 201
+* Successful Response
+  * Status Code: 201
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "id": 5,
@@ -314,7 +331,12 @@ user's information.
     }
     ```
 
-* Error response: 401
+* Error response: Validation errors
+  * Status Code: 401
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "email": "Email address is already in use.",
@@ -333,9 +355,18 @@ user's information.
 
 Returns all teacher classes.
 
-* Request: GET /api/classes
+* Require Authentication: true
+* Request
+  * Method: GET
+  * Route path: /api/classes
+  * Body: None
 
-* Response: 200
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     [
       {
@@ -355,9 +386,18 @@ Returns all teacher classes.
 
 Returns all student classes.
 
-* Request: GET /api/classes
+* Require Authentication: true
+* Request
+  * Method: GET
+  * Route path: /api/classes
+  * Body: None
 
-* Response: 200
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     [
       {
@@ -395,9 +435,18 @@ Returns all student classes.
 
 Returns teacher's class by ID with all the information needed for the grade book page.
 
-* Request: GET /api/classes/:classId
+* Require Authentication: true (teacher only)
+* Request
+  * Method: GET
+  * Route path: /api/classes/:classId
+  * Body: None
 
-* Response: 200
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "id": 1,
@@ -438,9 +487,18 @@ Returns teacher's class by ID with all the information needed for the grade book
 
 Returns student's class by ID with all information for the grade page.
 
-* Request: GET /api/classes/:classId
+* Require Authentication: true 
+* Request
+  * Method: GET
+  * Route path: /api/classes/:classId
+  * Body: None
 
-* Response: 200
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "id": 1,
@@ -476,7 +534,12 @@ Returns student's class by ID with all information for the grade page.
 
 Creates new class.
 
-* Request: POST /api/classes
+* Require Authentication: true (teacher only)
+* Request
+  * Method: POST
+  * Route path: /api/classes
+  * Body: 
+
     ```json
     {
       "teacher_id": 1,
@@ -488,7 +551,12 @@ Creates new class.
     }
     ```
 
-* Response: 200
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     [
       {
@@ -514,7 +582,12 @@ Creates new class.
     ]
     ```
 
-* Error Response: 401
+* Error Response: Validation errors
+  * Status Code: 401
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "name": "Name address is required",
@@ -529,7 +602,13 @@ Creates new class.
 
 Edits class by ID.
 
-* Request: GET /api/classes/:classId
+* Require Authentication: true (teacher only)
+* Request
+  * Method: GET
+  * Route path: /api/classes/:classId
+  * Body: 
+
+    ```json
     {
       "teacher_id": 1,
       "name": "Algebra",
@@ -540,7 +619,12 @@ Edits class by ID.
     }
     ```
 
-* Response: 200
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     [
       {
@@ -566,7 +650,12 @@ Edits class by ID.
     ]
     ```
 
-* Error Response: 401
+* Error Response: Validation errors
+  * Status Code: 401
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "name": "Name address is required",
@@ -577,7 +666,12 @@ Edits class by ID.
     }
     ```
 
-* Error response: 404
+* Error response: Couldn't find a Spot with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "message": "Class not found"
@@ -588,9 +682,18 @@ Edits class by ID.
 
 Deletes class by ID.
 
-* Request: GET /api/classes/:classId
+* Require Authentication: true (teacher only)
+* Request
+  * Method: GET
+  * Route path: /api/classes/:classId
+  * Body: None
 
-* Response: 200
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     [
       {
@@ -606,7 +709,12 @@ Deletes class by ID.
     ]
     ```
 
-* Error response: 404
+* Error response: Couldn't find a Spot with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "message": "Class couldn't be found"
@@ -619,7 +727,12 @@ Deletes class by ID.
 
 Creates class assignment.
 
-* Request: POST /api/classes/:classId/assignments
+* Require Authentication: true (teacher only)
+* Request
+  * Method: POST
+  * Route path: /api/classes/:classId/assignments
+  * Body: 
+
     ```json
     {
         "name": "Exponents Homework",
@@ -629,7 +742,12 @@ Creates class assignment.
     }
     ```
 
-* Response: 200
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "id": 1,
@@ -675,14 +793,24 @@ Creates class assignment.
     }
     ```
 
-* Error response: 404
+* Error response: Couldn't find a class with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "message": "Class not found"
     }
     ```
 
-* Error Response: 400
+* Error Response: Validation errors
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "name": "Name is required",
@@ -696,7 +824,12 @@ Creates class assignment.
 
 Edits class assignment by ID.
 
-* Request: PUT /api/assignments/:assignmentId
+* Require Authentication: true (teacher only)
+* Request
+  * Method: PUT
+  * Route path: /api/assignments/:assignmentId
+  * Body: 
+
     ```json
     {
       "name": "Exponents Homework",
@@ -706,7 +839,12 @@ Edits class assignment by ID.
     }
     ```
 
-* Response: 200
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "id": 1,
@@ -752,14 +890,24 @@ Edits class assignment by ID.
     }
     ```
 
-* Error response: 404
+* Error response: Couldn't find a assignment with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "message": "Assignment not found"
     }
     ```
 
-* Error Response: 400
+* Error Response: Validation errors
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "name": "Name is required",
@@ -773,9 +921,18 @@ Edits class assignment by ID.
 
 Deletes class assignment by ID.
 
-* Request: DELETE /api/assignments/:assignmentId
+* Require Authentication: true (teacher only)
+* Request
+  * Method: DELETE
+  * Route path: /api/assignments/:assignmentId
+  * Body: None
 
-* Response: 200
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "id": 1,
@@ -812,7 +969,12 @@ Deletes class assignment by ID.
     }
     ```
 
-* Error response: 404
+* Error response: Couldn't find a assignment with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "message": "Assignment not found"
@@ -825,9 +987,18 @@ Deletes class assignment by ID.
 
 Adds a Student to a classroom.
 
-* Request: POST /api/classes/:classId/students/:studentId
+* Require Authentication: true (teacher only)
+* Request
+  * Method: POST
+  * Route path: /api/classes/:classId/students/:studentId
+  * Body: None
 
-* Response: 200
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "id": 1,
@@ -869,21 +1040,36 @@ Adds a Student to a classroom.
     }
     ```
 
-* Error response: 404
+* Error response: Couldn't find a class with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "message": "Class not found"
     }
     ```
 
-* Error response: 404
+* Error response: Couldn't find a student with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "message": "Student not found"
     }
     ```
 
-* Error Response: 401
+* Error Response: Validation error
+  * Status Code: 401
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "message": "Student Already Exists"
@@ -894,9 +1080,18 @@ Adds a Student to a classroom.
 
 Remove a Student to a classroom.
 
-* Request: DELETE /api/classes/:classId/students/:studentId
+* Require Authentication: true (teacher only)
+* Request
+  * Method: DELETE
+  * Route path: /api/classes/:classId/students/:studentId
+  * Body: None
 
-* Response: 200
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "id": 1,
@@ -933,21 +1128,36 @@ Remove a Student to a classroom.
     }
     ```
 
-* Error response: 404
+* Error response: Couldn't find a class with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "message": "Class not found"
     }
     ```
 
-* Error response: 404
+* Error response: Couldn't find a student with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "message": "Student not found"
     }
     ```
 
-* Error Response: 401
+* Error Response: Couldn't find a student with the specified id in class with specified id
+  * Status Code: 401
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "message": "Student is not in this class"
@@ -961,14 +1171,24 @@ Remove a Student to a classroom.
 
 Creates new grade.
 
-* Request: POST /api/assignments/:assignmentId/grades/:studentId
+* Require Authentication: true (teacher only)
+* Request
+  * Method: POST
+  * Route path: /api/assignments/:assignmentId/grades/:studentId
+  * Body: 
+
     ```json
     {
       "grade": 90
     }
     ```
 
-* Response: 200
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "id": 1,
@@ -1015,21 +1235,36 @@ Creates new grade.
     }
     ```
 
-* Error response: 404
+* Error response: Couldn't find a assignment with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "message": "Assignment couldn't be found"
     }
     ```
 
-* Error response: 404
+* Error response: Couldn't find a student with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "message": "Student couldn't be found"
     }
     ```
 
-* Error Response: 400
+* Error Response: Body validation errors
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "grade": "Must be between 0 and 100"
@@ -1040,14 +1275,24 @@ Creates new grade.
 
 Edits grade by ID.
 
-* Request: PUT /api/assignments/:assignmentId/grades/:studentId
+* Require Authentication: true (teacher only)
+* Request
+  * Method: PUT
+  * Route path: /api/assignments/:assignmentId/grades/:studentId
+  * Body: 
+
     ```json
     {
         "grade": 85
     }
     ```
 
-* Response: 200
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "id": 1,
@@ -1094,14 +1339,24 @@ Edits grade by ID.
     }
     ```
 
-* Error response: 404
+* Error response: Couldn't find a grade with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "message": "Grade couldn't be found"
     }
     ```
 
-* Error Response: 400
+* Error Response: Body validation errors
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "grade": "Grade is required"
@@ -1112,9 +1367,18 @@ Edits grade by ID.
 
 Deletes grade by ID.
 
-* Request: DELETE /api/assignments/:assignmentId/grades/:studentId
+* Require Authentication: true (teacher only)
+* Request
+  * Method: DELETE
+  * Route path: /api/assignments/:assignmentId/grades/:studentId
+  * Body: None
 
-* Response: 200
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "id": 1,
@@ -1156,53 +1420,14 @@ Deletes grade by ID.
     }
     ```
 
-* Error response: 404
+* Error response: Couldn't find a grade with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
     ```json
     {
       "message": "Grade couldn't be found"
     }
     ```
-
-# Technical Implementation
-A lot of thought went into the implementation of the grade book table.  The system requires complex and dynamic information pulled from the database.  In the end, the use of one dynamic object became the optimal choice.  All database changes like a new assignment of grade return an updated version of the object.  Here's an example of the object:
-
-```javascript
-{
-  id: 1,
-  teacher_id: 1,
-  name: "Algebra",
-  subject: "Math",
-  grade: 8,
-  period: 1,
-  room: 315,
-  students: [
-    {
-      id: 5,
-      firstName: "Harry",
-      lastName: "Potter"
-    }, //more students
-  ],
-  assignments: [
-    {
-      id: 1,
-      class_id: 1,
-      name: "Exponents Classwork",
-      type: "CW",
-      quarter: 1,
-      due_date: "Mon, 19 Aug 2024",
-      grades: [
-        {
-          assignment_id: 1,
-          student_id: 5,
-          grade: 82
-        }, //more grades
-      ]
-    }, //more assignments
-  ]
-}
-```
-
-# Future Features
-- Student search and information page
-- Class wide and school wide announcement wall with options to comment
-- Appointment system for teacher, staff and parents

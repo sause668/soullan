@@ -1,0 +1,95 @@
+#landingCon {
+    position: fixed;
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+#titleSide {
+    width: 60%;
+    background-color: #007AFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 6rem;
+}
+
+#titleCon {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#titleMain {
+    font-size: 4rem;
+}
+
+#titleSub {
+    font-size: 2rem;
+}
+
+#loginSide {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#loginCon {
+    padding: 2rem;
+}
+
+.btnLanding {
+    width: 100%;
+}
+
+.signupButton {
+    margin-top: .5rem;
+}
+
+#demoCon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    margin-top: 1rem;
+    padding: 1rem;
+
+}
+
+.demoButton {
+}
+
+@media (max-width:750px) {
+    #landingCon {
+        flex-direction: column;
+    }
+
+    #titleSide {
+        width: auto;
+        padding-bottom: 3rem;
+    }
+
+    #loginSide {
+        width: auto;
+        padding-top: 3rem;
+    }
+}
+
+@media (max-width:450px) {
+    #titleSide {
+        padding-bottom: 1.5rem;
+    }
+
+    #titleMain {
+        font-size: 3rem;
+    }
+    
+    #titleSub {
+        font-size: 1.5rem;
+    }
+}

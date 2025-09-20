@@ -1,0 +1,256 @@
+@font-face {
+    font-family: 'Sour Gummy';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/fonts/SourGummy-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Sour Gummy';
+    font-style: normal;
+    font-weight: bold;
+    src: url('/fonts/SourGummy-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'Chewy';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/fonts/Chewy-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Delius';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/fonts/Delius-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'BalsamiqSans';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/fonts/BalsamiqSans-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'BalsamiqSans';
+    font-style: normal;
+    font-weight: bold;
+    src: url('/fonts/BalsamiqSans-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/fonts/RobotoFlex-Regular.ttf');
+}
+
+body {
+    font-family: 'Roboto Flex';
+    padding: 0px 0px;
+    margin: 0px;
+}
+
+#mainPageCon {
+    position: relative;
+    min-height: 100vh;
+}
+
+#subPageCon {
+    padding-bottom: 45px;
+}
+
+h1,h2  {
+    font-family: 'Sour Gummy';
+    margin: 0px;
+}
+
+h3,h4 {
+    font-family: 'BalsamiqSans';
+    margin: 0px;
+}
+
+h5,h6,p {
+    font-family: 'Roboto Flex';
+    margin: 0px;
+}
+
+button {
+    font-family: 'Delius';
+    border: 1px solid #007AFF;
+    background-color: #007AFF;
+    transition: background-color .2s;
+    color: white;
+    border-radius: 10px;
+    padding: .5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+button:hover {
+    border: 1px solid #005ec3;
+    background-color: #005ec3;
+    transition: background-color .2s;
+}
+
+.whiteBox {
+    background-color: white;
+    border: 1px solid #007AFF;
+    border-radius: 20px;
+    
+}
+
+.blueBox {
+    background-color: #007AFF;
+    border: 1px solid #007AFF;
+    border-radius: 20px;
+    color: white;
+}
+
+.lightBlueBox {
+    background-color: #007bff4b;
+    border-radius: 20px;
+}
+
+
+
+.formCon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 1rem;
+}
+
+.inputTitle {
+    margin-bottom: .8rem;
+}
+
+.inputCon {
+    margin-bottom: 1rem;
+}
+
+.labelCon {
+
+}
+
+.labelTitle {
+    margin-bottom: .3rem;
+}
+
+.error {
+    color: #ff1744;
+    margin-top: .2rem;
+}
+
+.formInput {
+    width: 200px;
+    border: 1px solid #007AFF;
+    border-radius: 5px;
+    padding: .5rem;
+}
+
+.formInput:focus {
+    border-color: #005ec3;
+    outline: none;
+}
+
+
+.submitCon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.confirmButtonCon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .7rem;
+    margin-top: 1rem;
+}
+
+.submitButton {
+    
+    
+}
+
+.submitButton:disabled {
+    border: 1px solid #9bb4cf;
+    background-color: #9bb4cf;
+}
+
+.confirmText {
+    text-align: center;
+}
+
+
+.A {
+    background-color: #00e67761;
+}
+
+.B {
+    background-color: #c8ff005f;
+}
+
+.C {
+    background-color: #ffea0068;
+}
+
+.D {
+    background-color: #ff91005f;
+}
+
+.F {
+    background-color: #ff17455a;
+}
+
+.fA {
+    background-color: #00e677a6;
+}
+
+.fB {
+    background-color: #c8ff00a6;
+}
+
+.fC {
+    background-color: #ffea00a6;
+}
+
+.fD {
+    background-color: #ff9100a6;
+}
+
+.fF {
+    background-color: #ff1745a6;
+}
+
+.noGrade {
+    background-color: #0000004b;
+}
+
+.HW {
+    background-color: #00aeff4a;   
+}
+
+.CW {
+    background-color: #00aeff4a;
+}
+
+.Q {
+    background-color: #d400f954;
+}
+
+.T {
+    background-color: #f500564e;
+}
+
+.P {
+    background-color: #f500564e;
+    ;
+}
+

@@ -1,0 +1,39 @@
+#footerCon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    height: 45px;
+    width: 100%;
+    background-color: #007AFF;
+    text-align: right;
+    /* padding: 0 1rem; */
+}
+
+#aboutConF {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: .3rem;
+    padding-left: 1rem;
+}
+
+#aboutTitleF {
+    color: white;
+}
+
+#soulSiteBtn {
+    color: white;
+    margin-right: 1rem;
+}
+
+@media (max-width:400px) {
+    #aboutConF {
+        padding-left: .5rem;
+    }
+
+    #soulSiteBtn {
+        margin-right: .5rem;
+    }
+}

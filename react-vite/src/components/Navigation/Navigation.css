@@ -1,0 +1,121 @@
+.profile-dropdown {
+  position: absolute;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+  gap: .2rem;
+  padding: .5rem .25rem;
+  margin-top: .25rem;
+  color: black;
+}
+
+#navCon {
+  position: sticky;
+  top: 0;
+  background-color: #007AFF;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  box-shadow: 0px 3px 3px #a6a6a6;
+}
+
+#backButtonCon {
+  border-radius: 90px;
+  /* margin-left: .5rem; */
+}
+
+#backButton {
+  padding: .3rem;
+  border-radius: 50px;
+}
+
+#backButton:hover {
+  background-color: #007AFF;
+  border-color: #007AFF;
+}
+
+#backButtonIcon {
+  height: 2rem;
+  width: 2rem;
+  color: white;
+  transition: color .2s;
+}
+
+#backButtonIcon:hover {
+  color: #005ec3;
+  transition: color .2s;
+}
+
+#navLogoCon {
+  padding: .5rem;
+  opacity: 0;
+}
+
+#navLogo {
+  height: 3rem;
+}
+
+
+
+#navTitleCon {
+
+}
+
+#navTitle {
+  font-size: 3rem;
+  cursor: pointer;
+}
+
+#navProfileButtonCon {
+  border-radius: 90px;
+  margin-right: 1rem;
+}
+
+#navProfileButton {
+  padding: .3rem;
+  border-radius: 50px;
+}
+
+#navProfileButton:hover {
+  background-color: #007AFF;
+  border-color: #007AFF;
+}
+
+#navProfileLogo {
+  height: 2rem;
+  width: 2rem;
+  color: white;
+  transition: color .2s;
+}
+
+#navProfileLogo:hover {
+  color: #005ec3;
+  transition: color .2s;
+}
+
+#navDropdownItem {
+
+}
+
+#navLogout {
+  margin-top: .5rem;
+}
+
+@media (max-width:550px) {
+  #navLogoCon {
+    display: none;
+  }
+
+  #navTitleCon {
+    margin-left: 1rem;
+  }
+}
+
+@media (max-width:450px) {
+  #navTitle {
+    font-size: 2rem;
+  }
+}

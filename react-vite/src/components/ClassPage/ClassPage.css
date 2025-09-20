@@ -1,0 +1,200 @@
+#classConC {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+/* Header */
+#headerConC {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+#titleConC {
+    text-align: center;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+#titleC {
+
+}
+
+#optionsConC {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: .5rem;
+    padding: 1rem;
+}
+
+
+.gradeBookButtonC {
+
+}
+
+.addStudentC {
+
+}
+
+.newAssignmentC {
+
+}
+
+.quarterSelectConC {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: .2rem;
+}
+
+.quarterSelectC {
+    border: 1px solid #007AFF;
+    border-radius: 5px;
+    padding: .5rem;
+    width: 3rem;
+    margin: 0rem;
+}
+#classInfoFormatConC {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+}
+
+#classInfoConC {
+    /* display: grid;
+    grid-template-columns: 50% 50%;
+    grid-row: auto; */
+    display: flex;
+    justify-content: center;
+    width: 80%;
+}
+
+.gridItemFormatC {
+    width: 50%;
+}
+
+.subTitleConC {
+    display: flex;
+    /* justify-content: center; */
+}
+
+.subTitleC {
+    text-decoration-line: underline;
+    margin-left: 1rem;
+}
+
+#assignmentsConC {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    width: 90%;
+   
+}
+
+.assignConC {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.assignNameC {
+
+}
+
+.assignTypeC {
+
+}
+
+.assignDueDateC {
+
+}
+
+#studentsConC {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    width: 90%;
+
+}
+
+.studentConC {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.studentNameC {
+
+}
+
+.studentGradeC {
+
+}
+
+@media (max-width:920px) {
+    #headerConC {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    #titleConC {
+        align-items: center;
+    }
+    #classInfoConC {
+        width: 90%;
+    }
+
+    #assignmentsConC,#studentsConC {
+        width: 95%;
+    }
+}
+
+@media (max-width:700px) {
+    #classInfoConC {
+        width: 100%;
+    }
+
+    #assignmentsConC,#studentsConC {
+        width: 98%;
+    }
+}
+
+@media (max-width:600px) {
+    #classInfoConC {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+    }
+
+    .gridItemFormatC {
+        width: 100%;
+    }
+}
+
+@media (max-width:540px) {
+    #titleC {
+        font-size: 1.75rem;
+    }
+
+    
+
+    
+}
+
+
+

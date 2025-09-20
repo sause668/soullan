@@ -1,0 +1,174 @@
+.dashboardCon {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-rows: auto;
+    gap: .1rem;
+    padding: 1rem 1rem 0rem;
+    margin-bottom: .5rem;
+}
+
+/* Profile */
+#profileSideDB {
+    display: flex;
+    justify-content: center;
+    
+}
+
+#profileConDB {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    height: inherit;
+}
+
+#profilePicConDB {
+
+}
+
+#profilePicDB {
+    font-size: 10rem;
+    background-color: white;
+    border: 1px solid #007bff4b;
+    border-radius: 100px;
+}
+
+#profileInfoConDB {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+}
+
+.profileInfoDB {
+
+}
+
+.profileInfoDB {
+    text-align: center;
+}
+
+
+
+.newClassButtonDB {
+    margin-top: .5rem;
+}
+
+
+/* Classes */
+#classesSideDB {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    /* display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto;
+    gap: .3rem; */
+    border: 1px solid black;
+}
+
+.classGridConDB {
+    padding: 0rem;
+    border: 1px solid black;
+
+}
+
+.classConDB {
+    display: flex;
+    justify-content: space-between;
+    gap: .5rem;
+    /* width: 80%; */
+    padding: 1rem;
+
+}
+
+#classInfoDB {
+
+}
+
+
+/* Teacher */
+.classButtonsConDB {
+    /* display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: .2rem;
+    margin-top: 1rem; */
+}
+
+.gradeBookDB {
+
+}
+
+.editDB {
+
+}
+
+.deleteDB {
+
+}
+
+
+
+/* Student */
+.classGradeConDB {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.currentGradeDB {
+
+}
+
+
+.gradesDB {
+
+}
+
+
+
+@media (max-width:1000px) {
+    .dashboardCon {
+        grid-template-columns: 40% 60%;
+    }
+
+    #classesSideDB {
+        grid-template-columns: 100%;
+    }
+
+    .classGridConDB {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        padding: 0rem;
+    }
+}
+
+@media (max-width:850px) {
+    .classConDB {
+        width: 100%;
+    }
+}
+
+@media (max-width:600px) {
+    .dashboardCon {
+        grid-template-columns: 100%;
+    }
+    #profileSideDB {
+        margin-bottom: 1rem;
+    }
+
+    #profileConDB {
+        flex-direction: row;
+        padding: 1rem;
+        height: inherit;
+    }
+}
+@media (max-width:450px) {
+    #profilePicDB {
+        font-size: 8rem;
+    }
+}
