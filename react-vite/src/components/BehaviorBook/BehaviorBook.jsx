@@ -87,8 +87,9 @@ function BehaviorBook() {
 
   // Calculate behavior final grade (average of the three behavior scores)
   const calcBehaviorFinalGrade = (studentId) => {
-    const studentGrade = getStudentBehaviorGrade(studentId);
-    return studentGrade ? studentGrade.final_grade : 'N/A';
+    /*const studentGrade = getStudentBehaviorGrade(studentId);
+    return studentGrade ? studentGrade.final_grade : 'N/A';*/
+    return 'N/A';
   };
 
   useEffect(() => {
@@ -197,18 +198,9 @@ function BehaviorBook() {
                           
                           return (
                             <td key={`grade${iStudent}${iAssignment}`} className="tableCellBB tableBodyCellBB gradeBodyCellBB">
-                              <select 
-                                className="behaviorGradeSelect"
-                                value={currentGrade || ''}
-                                onChange={(e) => handleBehaviorGradeChange(student.id, assignment.id, parseInt(e.target.value))}
-                              >
-                                <option value="">-</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                              </select>
+                              <div className="behaviorGradeStatic">
+                                {currentGrade || '-'}
+                              </div>
                             </td>
                           );
                         })}
