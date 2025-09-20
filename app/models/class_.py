@@ -57,7 +57,8 @@ class Class(db.Model):
             "period": self.period,
             "room": self.room,
             "students": [student.info() for student in self.students],
-            "assignments": [assignment.grade_book() for assignment in self.assignments]
+            "assignments": [assignment.grade_book() for assignment in self.assignments],
+            "behaviors": [behavior.info() for behavior in self.behaviors]
         }
 
     def behavior_book(self):
@@ -70,7 +71,7 @@ class Class(db.Model):
             "period": self.period,
             "room": self.room,
             "students": [student.info() for student in self.students],
-            "behaviors": [behavior.behavior_book() for behavior in self.behaviors]
+            "behaviors": [behavior.info() for behavior in self.behaviors]
         }
     
     def grades(self, student_id):
@@ -84,6 +85,7 @@ class Class(db.Model):
             "room": self.room,
             "current_grade": "To be worked on",
             "assignments": [assignment.grade(student_id) for assignment in self.assignments],
+            "behaviors": [behavior.info(student_id) for behavior in self.behaviors],
             "teacher": self.teacher.info()
         }
     
@@ -111,7 +113,8 @@ class Class(db.Model):
             "room": self.room,
             "teacher": self.teacher.info(),
             "students": [student.info() for student in self.students],
-            "assignments": [assignment.grade_book() for assignment in self.assignments]
+            "assignments": [assignment.grade_book() for assignment in self.assignments],
+            "behaviors": [behavior.info_limited() for behavior in self.behaviors]
         }
     
     

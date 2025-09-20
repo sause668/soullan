@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, Class, StudentClass, Student, Assignment, StudentBehavior
-from app.forms import ClassForm, AssignmentForm, BehaviorForm
+from app.forms import ClassForm, AssignmentForm, StudentBehaviorForm
 from datetime import datetime
 
 class_routes = Blueprint('classes', __name__)
@@ -221,7 +221,7 @@ def create_behavior(class_id):
     if current_user.type != 'teacher':
         return jsonify({"message": "Teacher Authorization Required"}), 401
     
-    form = BehaviorForm()
+    form = StudentBehaviorForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         
@@ -242,6 +242,6 @@ def create_behavior(class_id):
 
         class_ = Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first()
         
-        return jsonify(class_.behavior_book()), 201
+        return jsonify(class_.grade_book()), 201
     
     return form.errors, 400
