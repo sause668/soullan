@@ -3,34 +3,34 @@ import { useDispatch, useSelector } from "react-redux";
 import "./BehaviorBook.css";
 import { Navigate, useParams } from "react-router-dom";
 import { fetchGradebookClass } from "../../redux/class";
-import { fetchClassBehaviorGrades, updateBehaviorGrades, createBehaviorGrades } from "../../redux/behaviorGrades";
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
 import AddStudentModal from "./AddStudentModal";
 import OpenModalCell from "../OpenModalTableCell/OpenModalTableCell";
 import StudentInfoModal from "./StudentInfoModal";
 import { calcLetterGrade, sortStudents } from "../../utils/Grading";
 import AssignmentInfo from "./AssignmentInfo";
+import { csrfFetch } from "../../redux/csrf";
 
 function BehaviorBook() {
   const dispatch = useDispatch();
   const { classId } = useParams();
   const user = useSelector((state) => state.session.user);
   const class_ = useSelector((state) => state.class.class);
-  const behaviorGrades = useSelector((state) => state.behaviorGrades.behaviorGrades);
   const [quarter, setQuarter] = useState(1)
   const [isLoaded, setIsLoaded] = useState(false);
   const [errors, setErrors] = useState({});
+  const [behaviors, setBehaviors] = useState([]);
 
   // Define the three behavior assignments
   const behaviorAssignments = [
     { id: 'attention', name: 'Attention', type: 'behavior', quarter: 1 },
-    { id: 'learning_speed', name: 'Learning Speed', type: 'behavior', quarter: 1 },
+    { id: 'learnability', name: 'Learning Speed', type: 'behavior', quarter: 1 },
     { id: 'cooperation', name: 'Cooperation', type: 'behavior', quarter: 1 }
   ];
 
   // Get behavior grade for a student
   const getStudentBehaviorGrade = (studentId) => {
-    return behaviorGrades.find(bg => bg.student.id === studentId) || null;
+    return behaviors.find(bg => bg.student_id === studentId) || null;
   };
 
   // Handle behavior grade change
@@ -44,37 +44,57 @@ function BehaviorBook() {
         [assignmentId]: grade
       };
       
-      const result = await dispatch(updateBehaviorGrades({
-        studentId,
-        classId,
-        quarter,
-        attention: updatedGrades.attention,
-        learning_speed: updatedGrades.learning_speed,
-        cooperation: updatedGrades.cooperation
-      }));
-      
-      if (result.errors) {
-        setErrors(result.errors);
+      try {
+        const response = await csrfFetch(`/api/classes/${classId}/behaviors`, {
+          method: 'POST',
+          body: JSON.stringify({
+            student_id: studentId,
+            attention: updatedGrades.attention,
+            learnability: updatedGrades.learnability,
+            cooperation: updatedGrades.cooperation,
+            notes: updatedGrades.notes || ''
+          })
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          setBehaviors(data.behaviors);
+        } else {
+          const errorData = await response.json();
+          setErrors(errorData);
+        }
+      } catch (error) {
+        setErrors({ message: "Something went wrong. Please try again." });
       }
     } else {
       // Create new behavior grades
       const newGrades = {
-        attention: assignmentId === 'attention' ? grade : null,
-        learning_speed: assignmentId === 'learning_speed' ? grade : null,
-        cooperation: assignmentId === 'cooperation' ? grade : null
+        attention: assignmentId === 'attention' ? grade : 1,
+        learnability: assignmentId === 'learnability' ? grade : 1,
+        cooperation: assignmentId === 'cooperation' ? grade : 1
       };
       
-      const result = await dispatch(createBehaviorGrades({
-        studentId,
-        classId,
-        quarter,
-        attention: newGrades.attention || 1,
-        learning_speed: newGrades.learning_speed || 1,
-        cooperation: newGrades.cooperation || 1
-      }));
-      
-      if (result.errors) {
-        setErrors(result.errors);
+      try {
+        const response = await csrfFetch(`/api/classes/${classId}/behaviors`, {
+          method: 'POST',
+          body: JSON.stringify({
+            student_id: studentId,
+            attention: newGrades.attention,
+            learnability: newGrades.learnability,
+            cooperation: newGrades.cooperation,
+            notes: ''
+          })
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          setBehaviors(data.behaviors);
+        } else {
+          const errorData = await response.json();
+          setErrors(errorData);
+        }
+      } catch (error) {
+        setErrors({ message: "Something went wrong. Please try again." });
       }
     }
   };
@@ -87,8 +107,11 @@ function BehaviorBook() {
 
   // Calculate behavior final grade (average of the three behavior scores)
   const calcBehaviorFinalGrade = (studentId) => {
-    /*const studentGrade = getStudentBehaviorGrade(studentId);
-    return studentGrade ? studentGrade.final_grade : 'N/A';*/
+    const studentGrade = getStudentBehaviorGrade(studentId);
+    if (studentGrade) {
+      const avg = (studentGrade.attention + studentGrade.learnability + studentGrade.cooperation) / 3;
+      return Math.round(avg * 10) / 10; // Round to 1 decimal place
+    }
     return 'N/A';
   };
 
@@ -105,10 +128,23 @@ function BehaviorBook() {
 
   // Fetch behavior grades when quarter changes
   useEffect(() => {
-    if (isLoaded && classId && quarter) {
-      dispatch(fetchClassBehaviorGrades({ classId, quarter }));
+    if (isLoaded && classId) {
+      // Fetch behavior data from the class
+      fetchBehaviorData();
     }
-  }, [dispatch, classId, quarter, isLoaded]);
+  }, [dispatch, classId, isLoaded]);
+
+  const fetchBehaviorData = async () => {
+    try {
+      const response = await csrfFetch(`/api/classes/${classId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setBehaviors(data.behaviors || []);
+      }
+    } catch (error) {
+      setErrors({ message: "Failed to fetch behavior data." });
+    }
+  };
 
   if (!user || user.type != 'teacher') return <Navigate to="/" replace={true} />;
 

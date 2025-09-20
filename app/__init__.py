@@ -12,7 +12,6 @@ from .api.assignment_routes import assignment_routes
 from .api.student_routes import student_routes
 from .api.teacher_routes import teacher_routes
 from .api.admin_routes import admin_routes
-from .api.behavior_grade_routes import behavior_grade_routes
 from .seeds import seed_commands
 from .config import Config
 

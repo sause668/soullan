@@ -3,4 +3,3 @@ from .signup_form import SignUpForm, SignUpFormTeacher, SignUpFormStudent
 from .class_form import ClassForm
 from .assignment_form import AssignmentForm
 from .grade_form import GradeForm
-from .behavior_grade_form import BehaviorGradeForm, BehaviorGradeUpdateForm
