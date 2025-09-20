@@ -141,7 +141,7 @@ function StudentGrades() {
           </div>
           <div id="aiResponseConG">
             <h2 id="aiResponseTitleG">AI Response</h2>
-            <p id="aiResponseTextG">{class_.ai_response.replace(/\*\*/g, '\n')}</p>
+            <p id="aiResponseTextG">{class_.ai_response}</p>
           </div>
         </div>
       )}

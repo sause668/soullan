@@ -114,15 +114,15 @@ export const convertBehaviorGrade = (grade) => {
 export const convertBehaviorPriorityGrade = (grade) => {
   switch (grade) {
     case 1:
-      return 'Highest';
+      return 'At Risk';
     case 2:
-      return 'High';
+      return 'Struggling';
     case 3:
-      return 'Medium';
+      return 'On Par';
     case 4:
-      return 'Low';
+      return 'Doing Well';
     case 5:
-      return 'Lowest';
+      return 'Accelerate';
     default:
       return 'N/A';
   }
