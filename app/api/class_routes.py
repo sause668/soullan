@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import db, Class, StudentClass, Student, Assignment
-from app.forms import ClassForm, AssignmentForm
+from app.models import db, Class, StudentClass, Student, Assignment, StudentBehavior
+from app.forms import ClassForm, AssignmentForm, BehaviorForm
 from datetime import datetime
 
 class_routes = Blueprint('classes', __name__)
@@ -212,5 +212,36 @@ def create_assignment(class_id):
 
     return form.errors, 400
     
+@class_routes.route('/<int:class_id>/behaviors', methods=['POST'])
+@login_required
+def create_behavior(class_id):
+    """
+    Create a behavior
+    """
+    if current_user.type != 'teacher':
+        return jsonify({"message": "Teacher Authorization Required"}), 401
+    
+    form = BehaviorForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        
+        if not Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first():
+            return jsonify({"message": "Class not found"}), 404
 
- 
+        behavior_new = StudentBehavior(
+            class_id=class_id,
+            student_id=form.data['student_id'],
+            attention=form.data['attention'],
+            learnability=form.data['learnability'],
+            cooperation=form.data['cooperation'],
+            notes=form.data['notes']
+        )
+
+        db.session.add(behavior_new)
+        db.session.commit()
+
+        class_ = Class.query.filter_by(id=class_id, teacher_id=current_user.teacher.id).first()
+        
+        return jsonify(class_.behavior_book()), 201
+    
+    return form.errors, 400
