@@ -166,6 +166,25 @@
     justify-content: center; */
 }
 
+#aiResponseConG {
+    margin-top: 1.5rem;
+    text-align: center;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border: 2px solid #007bff4b;
+    border-radius: 15px;
+    background-color: #007bff4b;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+#aiResponseTitleG {
+    margin: 0;
+}
+
+#aiResponseTextG {
+    margin: 0;
+}
+
 @media (max-width:1000px) {
     #classAssignmentsConG {
         grid-template-columns: 32.33333% 32.33333% 32.33333%;
