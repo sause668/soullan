@@ -72,21 +72,21 @@ function BehaviorBook() {
   return (
     <>
       {(isLoaded) && (
-        <div id="gradeBookCon">
-          <div id="headerConGB">
-            <div id="titleConGB" className="lightBlueBox">
-              <h1 id="titleGB">{class_.grade}th Grade {class_.name} - Period {class_.period}</h1>
+        <div id="behaviorBookCon">
+          <div id="headerConBB">
+            <div id="titleConBB" className="lightBlueBox">
+              <h1 id="titleBB">{class_.grade}th Grade {class_.name} - Period {class_.period}</h1>
             </div>
-            <div id="optionsConGB" className="lightBlueBox">
+            <div id="optionsConBB" className="lightBlueBox">
               <OpenModalButton
                 buttonText={'Add Student'}
                 modalComponent={<AddStudentModal 
                   classId={classId} 
                   currentStudentIds={class_.students.map(student => student.id)} 
                 />}
-                cssClasses={'gradeBookButtonGB addStudentGB'}
+                cssClasses={'behaviorBookButtonBB addStudentBB'}
               />
-              <div className='quarterSelectConGB'>
+              <div className='quarterSelectConBB'>
                 <label htmlFor='quarter'>
                   <p className=''>
                     Quarter
@@ -95,7 +95,7 @@ function BehaviorBook() {
                 <select 
                   name="quarter" 
                   id="quarter" 
-                  className="quarterSelectGB"
+                  className="quarterSelectBB"
                   value={quarter} 
                   onChange={(e) => setQuarter(parseInt(e.target.value))}
                 >
@@ -107,53 +107,53 @@ function BehaviorBook() {
               </div>
             </div>
           </div>
-          <div id="tableConGB" className="lightBlueBox">
+          <div id="tableConBB" className="lightBlueBox">
           
-            <div id="tableFormatConGB">
-              <div id="tableStudentsConGB">
-              <table id="tableGBS">
-                  <tbody id="tableBodyGB">
+            <div id="tableFormatConBB">
+              <div id="tableStudentsConBB">
+              <table id="tableBBS">
+                  <tbody id="tableBodyBB">
                     {class_.students.sort((s1, s2) => sortStudents(s1, s2)).map((student, iStudent) => (
-                      <tr className="tableBodyRowBG" key={`studentName${iStudent}`}>
+                      <tr className="tableBodyRowBB" key={`studentName${iStudent}`}>
                         <OpenModalCell
                           cellText={`${student.last_name}, ${student.first_name}`}
                           modalComponent={<StudentInfoModal
                             classId={class_.id}
                             student={student}
                           />}
-                          cssClasses={'tableCellGB tableBodyCellBG studentBodyCellGB'}
+                          cssClasses={'tableCellBB tableBodyCellBB studentBodyCellBB'}
                         />
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-              <div id="tableGradesConGB">
-                <table id="tableGB">
-                  <thead id="tableHeadGB">
-                    <tr id="tableHeadRowGB">
+              <div id="tableGradesConBB">
+                <table id="tableBB">
+                  <thead id="tableHeadBB">
+                    <tr id="tableHeadRowBB">
                       {behaviorAssignments.map((assignment, index) => (
                         <OpenModalCell
                           cellText={assignment.name}
                           modalComponent={<AssignmentInfo assignment={assignment}/>}
-                          cssClasses={`tableCellGB tableHeadCellGB assignHeadCellGB ${assignment.type}`}
+                          cssClasses={`tableCellBB tableHeadCellBB assignHeadCellBB ${assignment.type}`}
                           key={`assignHead${index}`}
                         />
                       ))}
-                      <td className="tableCellGB tableHeadCellGB finalHeadCellBG">Final</td>
+                      <td className="tableCellBB tableHeadCellBB finalHeadCellBB">Final</td>
                     </tr>
                   </thead>
-                  <tbody id="tableBodyGB">
+                  <tbody id="tableBodyBB">
                     {class_.students.map((student, iStudent) => {
                       // Calculate final grade using behavior assignments
                       let finalGrade = calcBehaviorFinalGrade(student.id);
                       let finalLetterGrade = finalGrade !== 'N/A' ? calcLetterGrade(finalGrade) : 'N/A';
                       return (
-                      <tr className="tableBodyRowBG" key={`studentName${iStudent}`}>
+                      <tr className="tableBodyRowBB" key={`studentName${iStudent}`}>
                         {behaviorAssignments.map((assignment, iAssignment) => {
                           const currentGrade = getBehaviorGrade(student.id, assignment.id);
                           return (
-                            <td key={`grade${iStudent}${iAssignment}`} className="tableCellGB tableBodyCellGB gradeBodyCellBG">
+                            <td key={`grade${iStudent}${iAssignment}`} className="tableCellBB tableBodyCellBB gradeBodyCellBB">
                               <select
                                 value={currentGrade}
                                 onChange={(e) => handleBehaviorGradeChange(student.id, assignment.id, e.target.value)}
@@ -170,9 +170,9 @@ function BehaviorBook() {
                           );
                         })}
                         {finalGrade != 'N/A' ? 
-                          <td className={`tableCellGB tableBodyCellGB finalBodyCellGB ${finalLetterGrade}`}>{finalGrade} ({finalLetterGrade})</td>
+                          <td className={`tableCellBB tableBodyCellBB finalBodyCellBB ${finalLetterGrade}`}>{finalGrade} ({finalLetterGrade})</td>
                         :
-                          <td className={`tableCellGB tableBodyCellGB finalBodyCellGB noGrade`}>N/A</td>
+                          <td className={`tableCellBB tableBodyCellBB finalBodyCellBB noGrade`}>N/A</td>
                         }
                       </tr>
                     )})}
