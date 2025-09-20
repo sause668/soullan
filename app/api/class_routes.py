@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, Class, StudentClass, Student, Assignment, StudentBehavior
-from app.forms import ClassForm, AssignmentForm, BehaviorForm
+from app.forms import ClassForm, AssignmentForm #, BehaviorForm
 from datetime import datetime
 
 class_routes = Blueprint('classes', __name__)
@@ -211,7 +211,7 @@ def create_assignment(class_id):
         return jsonify(class_.grade_book()), 201
 
     return form.errors, 400
-    
+'''    
 @class_routes.route('/<int:class_id>/behaviors', methods=['POST'])
 @login_required
 def create_behavior(class_id):
@@ -245,3 +245,4 @@ def create_behavior(class_id):
         return jsonify(class_.behavior_book()), 201
     
     return form.errors, 400
+'''
