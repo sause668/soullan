@@ -20,7 +20,7 @@ class Class(db.Model):
     teacher = db.relationship("Teacher", uselist=False, back_populates="classes")
     students = db.relationship("Student", uselist=True, secondary=students_classes, back_populates="classes")
     assignments = db.relationship("Assignment", uselist=True, back_populates="class_", cascade="all, delete-orphan")
-    behavior_grades = db.relationship("BehaviorGrade", uselist=True, back_populates="class_", cascade="all, delete-orphan")
+    behaviors = db.relationship("StudentBehavior", uselist=True, back_populates="class_", cascade="all, delete-orphan")
 
     def teacher_dash(self):
         return {
@@ -58,6 +58,19 @@ class Class(db.Model):
             "room": self.room,
             "students": [student.info() for student in self.students],
             "assignments": [assignment.grade_book() for assignment in self.assignments]
+        }
+
+    def behavior_book(self):
+        return {
+            "id": self.id,
+            "teacher_id": self.teacher_id,
+            "name": self.name,
+            "subject": self.subject,
+            "grade": self.grade,
+            "period": self.period,
+            "room": self.room,
+            "students": [student.info() for student in self.students],
+            "behaviors": [behavior.behavior_book() for behavior in self.behaviors]
         }
     
     def grades(self, student_id):
