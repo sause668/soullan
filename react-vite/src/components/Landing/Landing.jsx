@@ -122,10 +122,10 @@ function Landing() {
                 className="demoButton"
                 onClick={demoTeacher}
               >Demo Teacher</button>
-              <button 
+              {/*<button 
                 className="demoButton"
                 onClick={demoStudent}
-              >Demo Student</button>
+              >Demo Student</button>*/}
             </div>
         </div>
       </div>
