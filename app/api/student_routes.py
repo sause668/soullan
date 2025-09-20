@@ -72,11 +72,11 @@ def get_class_grades(student_id, class_id):
     # Extract behavior data if available
     if class_info.get('behaviors'):
         # Get the most recent behavior record for this student
-        latest_behavior = None
-        for behavior in class_info['behaviors']:
-            if behavior and behavior.get('student_id') == student_id:
-                latest_behavior = behavior
-                break
+        latest_behavior = class_info.get('behaviors')
+        # for behavior in class_info['behaviors']:
+        #     if behavior and behavior.get('student_id') == student_id:
+        #         latest_behavior = behavior
+        #         break
         
         if latest_behavior:
             behavior_data = {

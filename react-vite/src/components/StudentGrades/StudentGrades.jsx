@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./StudentGrades.css";
 import { useParams } from "react-router-dom";
 import { fetchGradesClass } from "../../redux/class";
-import { fetchStudentBehaviorGrades } from "../../redux/behaviorGrades";
-import { calcFinalGradeStudent, calcLetterGrade, sortAssignments, calcBehaviorGrade } from "../../utils/Grading";
+import { calcFinalGradeStudent, calcLetterGrade, sortAssignments, calcBehaviorGrade, convertBehaviorGrade, convertBehaviorPriorityGrade } from "../../utils/Grading";
 
 function StudentGrades() {
   const dispatch = useDispatch();
@@ -107,7 +106,7 @@ function StudentGrades() {
           <div id="behaviorScoresConG">
             <div id="behaviorScoresHeaderG" className="lightBlueBox">
               <h2 id="behaviorFinalScoreG">
-                Current Behavior Grade: {calcBehaviorGrade(class_.behaviors.attention, class_.behaviors.learnability, class_.behaviors.cooperation)}
+                Priority Level: {convertBehaviorPriorityGrade(calcBehaviorGrade(class_.behaviors.attention, class_.behaviors.learnability, class_.behaviors.cooperation))}
               </h2>
             </div>
             <div id="behaviorScoresGridG">
@@ -117,7 +116,7 @@ function StudentGrades() {
               }}>
                 <h3 className="behaviorScoreLabelG">Attention</h3>
                 <div className="behaviorScoreValueG">
-                  {class_.behaviors.attention}/5
+                  {convertBehaviorGrade(class_.behaviors.attention)}
                 </div>
               </div>
               <div className="behaviorScoreConG"
@@ -126,7 +125,7 @@ function StudentGrades() {
               }}>
                 <h3 className="behaviorScoreLabelG">Learning Speed</h3>
                 <div className="behaviorScoreValueG">
-                  {class_.behaviors.learnability}/5
+                  {convertBehaviorGrade(class_.behaviors.learnability)}
                 </div>
               </div>
               <div className="behaviorScoreConG"
@@ -135,10 +134,14 @@ function StudentGrades() {
               }}>
                 <h3 className="behaviorScoreLabelG">Cooperation</h3>
                 <div className="behaviorScoreValueG">
-                  {class_.behaviors.cooperation}/5
+                  {convertBehaviorGrade(class_.behaviors.cooperation)}
                 </div>
               </div>
             </div>
+          </div>
+          <div id="aiResponseConG">
+            <h2 id="aiResponseTitleG">AI Response</h2>
+            <p id="aiResponseTextG">{class_.ai_response.replace(/\*\*/g, '\n')}</p>
           </div>
         </div>
       )}
