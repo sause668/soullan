@@ -22,7 +22,17 @@ function GradeBook() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [errors, setErrors] = useState({});
 
-  
+  // Define the three behavior assignments
+  const behaviorAssignments = [
+    { id: 'attention', name: 'Attention', type: 'behavior', quarter: 1 },
+    { id: 'learnability', name: 'Learning Speed', type: 'behavior', quarter: 1 },
+    { id: 'cooperation', name: 'Cooperation', type: 'behavior', quarter: 1 }
+  ];
+
+  // Get behavior grade for a student
+  const getStudentBehaviorGrade = (studentId) => {
+    return behaviors.find(bg => bg.student_id === studentId) || null;
+  };
 
   useEffect(() => {
     dispatch(fetchGradebookClass({teacherId: user.teacher.id, classId}))
@@ -165,6 +175,72 @@ function GradeBook() {
                   </tbody>
                 </table>
               </div>
+              <div id="tableConBB" className="lightBlueBox">
+          
+            <div id="tableFormatConBB">
+              <div id="tableStudentsConBB">
+                <table id="tableBBS">
+                    <tbody id="tableBodyBB">
+                      {class_.students.sort((s1, s2) => sortStudents(s1, s2)).map((student, iStudent) => (
+                        <tr className="tableBodyRowBB" key={`studentName${iStudent}`}>
+                          <OpenModalCell
+                            cellText={`${student.last_name}, ${student.first_name}`}
+                            modalComponent={<StudentInfoModal
+                              classId={class_.id}
+                              student={student}
+                            />}
+                            cssClasses={'tableCellBB tableBodyCellBB studentBodyCellBB'}
+                          />
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div id="tableGradesConBB">
+                  <table id="tableBB">
+                    <thead id="tableHeadBB">
+                      <tr id="tableHeadRowBB">
+                        {behaviorAssignments.map((assignment, index) => (
+                          <OpenModalCell
+                            cellText={assignment.name}
+                            modalComponent={<AssignmentInfo assignment={assignment}/>}
+                            cssClasses={`tableCellBB tableHeadCellBB assignHeadCellBB ${assignment.type}`}
+                            key={`assignHead${index}`}
+                          />
+                        ))}
+                        <td className="tableCellBB tableHeadCellBB finalHeadCellBB">Final</td>
+                      </tr>
+                    </thead>
+                    <tbody id="tableBodyBB">
+                      {class_.students.map((student, iStudent) => {
+                        // Calculate final grade using behavior assignments
+                        let finalGrade = calcBehaviorFinalGrade(student.id);
+                        let finalLetterGrade = finalGrade !== 'N/A' ? calcLetterGrade(finalGrade) : 'N/A';
+                        return (
+                        <tr className="tableBodyRowBB" key={`studentName${iStudent}`}>
+                          {behaviorAssignments.map((assignment, iAssignment) => {
+                            const currentGrade = getBehaviorGrade(student.id, assignment.id);
+                            
+                            return (
+                              <td key={`grade${iStudent}${iAssignment}`} className="tableCellBB tableBodyCellBB gradeBodyCellBB">
+                                <div className="behaviorGradeStatic">
+                                  {currentGrade || '-'}
+                                </div>
+                              </td>
+                            );
+                          })}
+                          {finalGrade != 'N/A' ? 
+                            <td className={`tableCellBB tableBodyCellBB finalBodyCellBB ${finalLetterGrade}`}>{finalGrade} ({finalLetterGrade})</td>
+                          :
+                            <td className={`tableCellBB tableBodyCellBB finalBodyCellBB noGrade`}>N/A</td>
+                          }
+                        </tr>
+                      )})}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
             </div>
           </div>
         </div>
