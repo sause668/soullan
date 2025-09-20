@@ -143,6 +143,24 @@
 
 }
 
+.studentScoresConC {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.gradeBubble, .behaviorBubble {
+  flex: 1;
+  padding: 8px;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.gradeBubble h4, .behaviorBubble h3 {
+  margin: 0;
+  font-size: 14px;
+}
+
 @media (max-width:920px) {
     #headerConC {
         flex-direction: column;

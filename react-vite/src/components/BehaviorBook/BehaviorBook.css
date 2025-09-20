@@ -307,3 +307,41 @@ th,td {
 .behaviorGradeSelect:hover {
     border-color: #007bff;
 }
+
+.addBehaviorCellBB {
+  background-color: #f0f8ff;
+  cursor: pointer;
+  text-align: center;
+  vertical-align: middle;
+  min-width: 2rem;
+  max-width: 2rem;
+}
+
+/* .addBehaviorButton {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid #f0f8ff;
+  border-radius: 50%;
+  background-color: #f0f8ff;
+  color: black;
+  justify-self: center;
+  align-self: center;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.addBehaviorButton:hover {
+  background-color: #f0f8ff;
+  border-color: #f0f8ff;
+  transform: scale(1.1);
+}
+
+.addBehaviorButton:active {
+  transform: scale(0.95);
+} -->

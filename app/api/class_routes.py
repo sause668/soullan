@@ -211,7 +211,7 @@ def create_assignment(class_id):
         return jsonify(class_.grade_book()), 201
 
     return form.errors, 400
-    
+'''    
 @class_routes.route('/<int:class_id>/behaviors', methods=['POST'])
 @login_required
 def create_behavior(class_id):
@@ -245,3 +245,4 @@ def create_behavior(class_id):
         return jsonify(class_.grade_book()), 201
     
     return form.errors, 400
+'''
